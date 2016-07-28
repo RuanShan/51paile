@@ -1,0 +1,14 @@
+<%= render partial: 'spree/admin/shared/product_tabs', locals: { current: :auctions } %>
+
+<%= render partial: 'spree/admin/shared/error_messages', locals: { target: @auction } %>
+
+<%= form_for [:admin, @product, @auction], html: { multipart: true } do |f| %>
+  <fieldset>
+        <%= render partial: 'form', locals: { f: f } %>
+        <div class="form-actions" data-hook="buttons">
+          <%= button Spree.t('actions.update'), 'save' %>
+          <span class="or"><%= Spree.t(:or) %></span>
+          <%= button_link_to Spree.t('actions.cancel'), spree.admin_product_auctions_url(@product), id: 'cancel_link', icon: 'delete' %>
+        </div>
+  </fieldset>
+<% end %>

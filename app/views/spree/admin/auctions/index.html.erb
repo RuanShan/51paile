@@ -1,0 +1,51 @@
+<%= render partial: 'spree/admin/shared/product_tabs', locals: { current: :auctions } %>
+
+<% content_for :page_actions do %>
+  <%= button_link_to(Spree.t(:new_auction), spree.new_admin_product_auction_url(@product), { class: "btn-success", icon: 'add', id: 'new_auction_link' }) if can? :create, Spree::Auction %>
+<% end %>
+
+<% has_variants = @product.has_variants? %>
+
+<% unless @product.variant_images.any? %>
+  <div class="alert alert-warning">
+    <%= Spree.t(:no_resource_found, resource: plural_resource_name(Spree::Auction)) %>.
+  </div>
+<% else %>
+  <table class="table sortable" data-hook="auctions_table" >
+    <thead>
+      <tr data-hook="auctions_header">
+        <th >
+          <%= Spree.t(:starts_at) %>
+        </th>
+        <% if has_variants %>
+          <th>
+            <%= Spree::Variant.model_name.human %>
+          </th>
+        <% end %>
+        <th>
+          <%= Spree.t(:title) %>
+        </th>
+        <th class="actions"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% (@product.variant_auctions).each do |auction| %>
+        <tr id="<%= spree_dom_id auction %>" data-hook="auctions_row">
+          <td><%= l auction.starts_at, :format => :short %>          </td>
+          <td class="auction">
+            <%= link_to auction.title, spree.edit_admin_product_auction_url( @product, auction) %>
+          </td>
+          <% if has_variants %>
+            <td><%= options_text_for(auction.variant) %></td>
+          <% end %>
+
+          <td class="actions actions-2 text-right">
+            <%= link_to_with_icon('edit', Spree.t(:edit), spree.edit_admin_product_auction_url(@product, auction), class: 'btn btn-primary btn-sm', no_text: true, data: { action: 'edit' }) if can? :edit, auction %>
+            <%= link_to_delete(auction, { url: spree.admin_product_auction_url(@product, auction), no_text: true }) if can? :destroy, auction %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

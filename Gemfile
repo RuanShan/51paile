@@ -28,7 +28,13 @@ gem 'spree', '~> 3.1.0'
 gem 'spree_auth_devise', '~> 3.1.0'
 gem 'spree_gateway', '~> 3.1.0'
 
-#gem 'spree_auctions', path: './spree_auctions'    
+gem 'spree_editor',  github: "spree/spree_editor", branch: "3-1-stable"
+
+source 'https://rails-assets.org' do
+  gem 'rails-assets-datetimepicker'
+end
+
+#gem 'spree_auctions', path: './spree_auctions'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

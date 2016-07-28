@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160727123858) do
+ActiveRecord::Schema.define(version: 20160728160230) do
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false
@@ -90,6 +90,43 @@ ActiveRecord::Schema.define(version: 20160727123858) do
   add_index "spree_assets", ["position"], name: "index_spree_assets_on_position"
   add_index "spree_assets", ["viewable_id"], name: "index_assets_on_viewable_id"
   add_index "spree_assets", ["viewable_type", "type"], name: "index_assets_on_viewable_type_and_type"
+
+  create_table "spree_auctions", force: :cascade do |t|
+    t.boolean  "private",           default: false,  null: false
+    t.boolean  "delta",             default: false
+    t.integer  "status",            default: 0,      null: false
+    t.integer  "variant_id",        default: 0,      null: false
+    t.integer  "owner_id",          default: 0,      null: false
+    t.integer  "won_offer_id"
+    t.string   "title",             default: "",     null: false
+    t.text     "description",       default: "",     null: false
+    t.boolean  "highlight",         default: false
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.datetime "display_starts_at"
+    t.datetime "display_ends_at"
+    t.float    "evaluated_price",   default: 0.0
+    t.float    "starting_price",    default: 0.0
+    t.float    "price_increment",   default: 0.0
+    t.float    "reserve_price",     default: 0.0
+    t.float    "deposit",           default: 5000.0
+    t.integer  "offers_count",      default: 0
+    t.integer  "visits",            default: 0,      null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
+
+  create_table "spree_bids", force: :cascade do |t|
+    t.integer  "auction_id",                 null: false
+    t.integer  "bidder_id",                  null: false
+    t.boolean  "winner",     default: false
+    t.decimal  "amount",                     null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "spree_bids", ["auction_id"], name: "index_spree_bids_on_auction_id"
+  add_index "spree_bids", ["bidder_id"], name: "index_spree_bids_on_bidder_id"
 
   create_table "spree_calculators", force: :cascade do |t|
     t.string   "type"

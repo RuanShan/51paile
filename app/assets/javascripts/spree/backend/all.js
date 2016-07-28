@@ -6,6 +6,6 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require datetimepicker
 //= require spree/backend
-
 //= require_tree .
