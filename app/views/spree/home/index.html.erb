@@ -1,0 +1,18 @@
+<div class="clearfix">
+  <div class="pull-left">
+    <%= taxonomy_list( @taxonomies )  %>
+   </div>
+   <div class="pull-right">
+     <%= render partial: 'spree/shared/slider' %>
+   </div>
+
+</div>
+
+<div>
+  <div data-hook="taxon_children">
+    <% taxons = @taxonomies.collect{ |taxonomy| taxonomy.root } %>
+      <% cache [I18n.locale, @taxonomies] do %>
+        <%= render partial: 'taxon', collection: taxons %>
+      <% end %>
+  </div>
+</div>

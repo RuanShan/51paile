@@ -14,7 +14,17 @@ zh-CN:
         zipcode: "邮政编码"
       spree/auction:
         title: "标题"
-        text: "内容"
+        description: "内容"
+        evaluated_price: "评估价"
+        starting_price: "起拍价"
+        price_increment: "加价幅度"
+        reserve_price: "保留价"
+        deposit: "拍卖保证金"
+        starts_at: "拍卖开始时间"
+        ends_at: "拍卖结束时间"
+        display_starts_at: "展示开始时间"
+        display_ends_at: "展示结束时间"
+        remark: "备注"
       spree/calculator/tiered_flat_rate:
         preferred_base_amount:
         preferred_tiers:
@@ -211,6 +221,9 @@ zh-CN:
       spree/address:
         one: "地址"
         other: "地址"
+      spree/auction:
+        one: "拍卖"
+        other: "拍卖"
       spree/cheque_payment:
         one: 支票支付
         other: 支票支付
@@ -887,6 +900,7 @@ zh-CN:
     name_or_sku: "名称或条形码（输入产品名称中的至少4个字母）"
     new: "新建"
     new_adjustment: "新建调整"
+    new_auction: "新建拍卖"
     new_customer: "新建客户"
     new_customer_return: 新建客户退货
     new_image: "新建图片"

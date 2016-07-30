@@ -1,0 +1,12 @@
+<div id="paile-header">
+  <header data-hook>
+    <div class="container">
+      <div class="row">
+        <%= render :partial => 'spree/shared/nav_bar' %>
+      </div>
+    </div>
+  </header>
+  <div  id="header" class="container">
+    <%= render :partial => 'spree/shared/main_nav_bar' if store_menu? %>
+  </div>
+</div>

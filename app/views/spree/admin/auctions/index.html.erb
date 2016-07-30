@@ -15,7 +15,7 @@
     <thead>
       <tr data-hook="auctions_header">
         <th >
-          <%= Spree.t(:starts_at) %>
+          <%= Spree::Auction.human_attribute_name(:starts_at) %>
         </th>
         <% if has_variants %>
           <th>
@@ -23,7 +23,7 @@
           </th>
         <% end %>
         <th>
-          <%= Spree.t(:title) %>
+          <%= Spree::Auction.human_attribute_name(:title) %>
         </th>
         <th class="actions"></th>
       </tr>

@@ -25,7 +25,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 
 gem 'spree', '~> 3.1.0'
-gem 'spree_auth_devise', '~> 3.1.0'
+# custom user login menu
+gem 'spree_auth_devise', path: './spree_auth_devise'
 gem 'spree_gateway', '~> 3.1.0'
 
 gem 'spree_editor',  github: "spree/spree_editor", branch: "3-1-stable"
@@ -34,6 +35,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-datetimepicker'
 end
 
+gem 'spree_static_content', path: './spree_static_content'
 #gem 'spree_auctions', path: './spree_auctions'
 
 # Use ActiveModel has_secure_password
