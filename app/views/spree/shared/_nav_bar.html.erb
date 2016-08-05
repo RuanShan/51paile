@@ -1,7 +1,18 @@
-<nav class="navbar col-md-8 col-sm-9" id="top-nav-bar">
 
-  <ul id="nav-bar" class="nav navbar-nav navbar-left" data-hook>
-     <%= render :partial => "spree/shared/login_bar" %>
-     <li id="user-bar" data-hook> </li>
+  <ul id="nav-bar" class="nav navbar-nav navbar-left site-nav-bd-l" data-hook>
+    <% if spree_current_user %>
+    <li class="menu">
+      <div class="menu-hd">
+        <%= link_to Spree.t(:my_account), spree.account_path %>
+        <%= link_to Spree.t(:logout), spree.logout_path %>
+      </div>
+      </li>
+    <% else %>
+    <li id="link-to-login" class="menu">
+      <div class="menu-hd">
+        <%= link_to Spree.t(:login), spree.login_path %>
+      </div>
+    </li>
+    <% end %>
+
   </ul>
-</nav>

@@ -1,0 +1,14 @@
+<% content_for :title, "欢迎回来！" %>
+
+<div class="last">
+  <h2>近期拍卖</h2>
+  <% unless @auctions.empty? %>
+    <div >
+<%= render :partial=>"shared/auction/auction_cars" %>
+    </div>
+      <%= will_paginate @auctions %>
+  <% else %>
+    <div class="notice">现在没有公布的拍卖。</div>
+  <% end %>
+</div>
+

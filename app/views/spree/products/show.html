@@ -1,0 +1,62 @@
+<div class="product_wrapper">
+  <div class="module-sf">
+  <% @auction = @product.master.active_auction  %>
+
+  <% cache cache_key_for_product do %>
+    <div class="pm-main clearfix" data-hook="product_show" itemscope itemtype="https://schema.org/Product">
+      <h1> <%= @auction.title %> </h1>
+      <div  class="row" >
+        <div class="col-md-4 col-sm-5 pm-main-l" data-hook="product_left_part">
+          <div data-hook="product_left_part_wrap">
+            <div id="product-images" data-hook="product_images">
+              <div id="main-image" class="panel panel-default" data-hook>
+                <div class="panel-body text-center">
+                  <%= render :partial => 'image' %>
+                </div>
+              </div>
+              <div id="thumbnails" data-hook>
+                <%= render :partial => 'thumbnails' %>
+              </div>
+            </div>
+
+            <div data-hook="product_properties">
+              <%= render :partial => 'properties' %>
+            </div>
+
+            <div data-hook="promotions">
+              <%= render :partial => 'promotions' %>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-8 col-sm-7 pm-main-r" data-hook="product_right_part">
+          <div data-hook="product_right_part_wrap">
+
+
+              <% if @auction.present? %>
+              <div>  <%= render :partial => 'auction' %>  </div>
+              <% else %>
+                <div id="product-description" data-hook="product_description">
+                  <h1 class="product-title" itemprop="name"><%= @product.name %></h1>
+                </div>
+              <% end %>
+
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <%= render :partial => 'auction_process' %>
+
+    <div class="well" itemprop="description" data-hook="description">
+      <%= product_description(@product) %>
+    </div>
+
+    <div id="taxon-crumbs" class=" five " data-hook="product_taxons">
+      <%= render :partial => 'taxons' %>
+    </div>
+
+  <% end %>
+  </div>
+</div>

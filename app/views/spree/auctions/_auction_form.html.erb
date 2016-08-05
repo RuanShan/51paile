@@ -1,0 +1,142 @@
+<%
+#当前价：  拍卖尚未开始
+#拍卖厅：  倒计时出价大厅 开始：2013-06-17 10:00:00
+#距开始：  正在拍卖  结束：2013-06-17 10:13:00
+#拍卖权限  您没有参与拍卖权限   >>点击申请参与拍卖
+#起拍价： ￥1000元 加价幅度：￥500元  保留价：有
+#拍卖保证金：￥5000元  车辆承保金：￥44100元 过户保证金：中标价的10%(最低5000元，最高30000元)
+#拍卖时间  价格  用户ID
+car = @auction.car
+accident = @auction.car.accident
+%>
+<script type="text/javascript" charset="utf-8">
+  g_auction_closed = <%= !@auction.opened?%>
+</script>
+<div id="auction_info">
+<table class="auctionInfo">
+  <% if @auction.opened? or @auction.open? or @auction.closed? %>
+  <tr>
+    <td>当前价</td> <td colspan="2"><%= @auction.opened? ? @auction.current_price : ( @auction.open? ? "还没开始":"已经结束")  %></td>    
+  </tr> 
+  <tr>
+    <td>开始时间</td> <td colspan="2"><%= format_time(@auction.starts_at)%></td>
+  </tr>
+  <tr>
+    <td>结束时间</td> <td colspan="2"><%= format_time(@auction.expired_at)%></td>
+  </tr>
+  <tr>
+    <td>
+      <% if @auction.opened? %>
+      正在拍卖  
+      <% elsif @auction.open? %>
+      距开始
+      <% else %>
+      已结束
+      <% end %>
+      </td> 
+    <td colspan="2">
+      <% if @auction.opened? %>
+           <%=  Time.at( (@auction.expired_at-Time.now) ).utc.strftime("%H:%M:%S") %>
+      <% else %>
+          <% if @auction.open? %>
+            <% if @auction.starts_at.today? %>
+              <%= render :partial=>"time_to_start_countdown"%>
+            <% else %>
+              <%= distance_of_time_in_words_to_now(@auction.starts_at) %>            
+            <% end %>           
+          <% else %>
+              <%= distance_of_time_in_words_to_now(@auction.expired_at) %>            
+          <% end %>
+      <% end %>
+    </td>     
+  </tr>
+  <%else%>
+  <tr><td>当前价</td> <td><%= 0 %></td> </tr>
+  <tr><td>计划开始日期</td> <td><%= escape_date(@auction.expected_starts_at) if @auction.expected_starts_at.present? %></td> </tr>
+  <tr><td>计划结束日期</td> <td><%= escape_date(@auction.expected_expired_at) if @auction.expected_expired_at.present?%></td> </tr>
+  <tr><td>距开始</td> <td><%= distance_of_time_in_words_to_now(@auction.expected_starts_at)  if @auction.expected_starts_at.present?%></td> </tr>
+  <%end%>
+  
+  <tr>
+    <td>拍卖权限</td>
+    <td colspan="2">
+      <% if @auction.opened? %>
+      
+        <% if @auction.allowed_to_offer?(@current_user) %>
+          <%= form_for Offer.new,:url=>bid_auction_path, :remote=>true do |offer| %>
+            <table>
+              <tr>
+                <td><%= offer.label :price, '竞标价格' %>:</td>
+                <td><%= offer.text_field :price, :value=>(@auction.current_price+@auction.price_increment), :class => "span-2" %> 
+                  <%= offer.submit '出价', :confirm => "确认您的出价" %> 
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td><div id="bid_result"></div></td>
+              </tr>
+            </table>
+          <% end %>
+        
+        <% end %>
+      <% elsif @auction.open? %>
+        <% if @auction.allowed_to_offer?(@current_user) %>
+          "您可以投标，请耐心等待"
+        <% else %>
+          <% if signed_in? and current_user.messages.sent.with_auction(@auction).present? %>
+          您已申请参与拍卖,等待管理员审核
+          <% else%>
+          您没有参与拍卖权限   >> <%= link_to "点击申请参与拍卖", apply_auction_path(@auction) %>
+          <% end %>
+        <% end %>  
+      <% else %>
+        <%=  "无" %>
+      <% end %>
+      
+    </td>
+  </tr>
+</table>
+<table class="auctionInfo">  
+  <tr>
+    <td>
+      起拍价 
+    </td>
+    <td><%= @auction.starting_price %> </td>
+    <td>
+      加价幅度
+    </td>
+    <td><%= @auction.price_increment %></td>
+    <td>
+      保留价
+    </td>
+    <td><%= @auction.reserve_price>0 ? "有":"没有"  %></td>    
+  </tr>
+  <tr>
+    <td>
+      拍卖保证金
+    </td>
+    <td><%= @auction.deposit %></td>
+    <td>
+      车辆承保金
+    </td>
+    <td><%= car.chengbao_jine %></td>
+    <td>
+      过户保证金
+    </td>
+    <td><%= raw "中标价的10%</br>(最低5000元，最高30000元)"  %></td>    
+  </tr>
+</table>
+
+<table class="offerInfo">
+  <tr>
+    <th>拍卖时间</th>
+    <th>价格</th>
+    <th>用户ID</th>
+  </tr>
+  <% @auction.offers.order('created_at desc').limit(6).each do |offer| %>
+  <tr>
+    <td><%= format_time offer.created_at%> </td><td><%= offer.price%> </td><td><%= offer.offerer.login%> </td>
+  </tr>  
+  <% end %>
+</table>
+</div>

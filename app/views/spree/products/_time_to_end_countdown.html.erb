@@ -1,0 +1,39 @@
+<span id="time_to_end"></span>
+<script type="text/javascript" charset="utf-8">
+// Javascript
+var g_auction_closed = false;
+$(function() {
+  var end = new Date(<%= @auction.expired_at.end_of_day.to_i*1000 %>);  
+  var d, h, m, s;
+  $('#time_to_end').countdown(<%=Time.now.to_i*1000%>, end, function(event) {
+    var timeFormat = "%d day(s) %h小时%m分%s秒"
+        $this = $(this);
+    switch(event.type) {
+      case "days":
+        d = event.value;
+        break;
+      case "hours":
+        h = event.value;
+        break;
+      case "minutes":
+        m = event.value;
+        break;
+      case "seconds":
+        s = event.value;
+        if (parseInt(s)%2==0) // 
+        {
+          if ( g_auction_closed )
+          {
+            ajax_get('<%=close_auction_path(@auction)%>')
+            $this.detach();            
+          }else{
+            ajax_get('<%=start_auction_path(@auction)%>')
+          }
+        }
+        break;
+      case "finished":
+        break;
+    }
+  });
+});
+</script>

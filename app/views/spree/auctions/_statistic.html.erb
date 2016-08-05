@@ -1,0 +1,16 @@
+  <table class="center box" style="padding: 5px; margin: -20px auto 10px auto;">
+    <tr>
+      <td class="center">
+        ongoing auctions: <span><%= Auction.count %></span>
+      </td>
+      <td class="center">
+        Bids: <span><%= Offer.count %></span>
+      </td>
+      <td class="center">
+        Users in database: <span><%= @users %></span>
+      </td>
+      <td class="center">
+        active projects: <span><%= @projects %></span>
+      </td>
+    </tr>
+  </table>

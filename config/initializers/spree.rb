@@ -15,6 +15,7 @@ Spree.config do |config|
   # config.track_inventory_levels = false
   config.max_level_in_taxons_menu = 3
   config.logo = "logo/51paile.png"
+  config.currency = "CNY"
 end
 
 Spree.user_class = "Spree::User"
@@ -23,3 +24,5 @@ SpreeEditor::Config.tap do |config|
   config.ids = "product_description taxon_description auction_description  post_body"
   config.current_editor = "CKEditor"
 end
+
+Time::DATE_FORMATS[:auction_long] = '%Y/%m/%d %H:%M:%S'

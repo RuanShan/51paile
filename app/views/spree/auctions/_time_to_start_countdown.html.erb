@@ -1,0 +1,41 @@
+<script type="text/javascript" charset="utf-8">
+// Javascript
+$(function() {
+  var end = new Date(<%= @auction.starts_at.to_i*1000 %>);  
+  var d, h, m, s;
+  $('#time_to_start').countdown(<%=Time.now.to_i*1000%>,end, function(event) {
+    var timeFormat = "%d day(s) %h小时%m分%s秒"
+        $this = $(this);
+    switch(event.type) {
+      case "days":
+        d = event.value;
+        break;
+      case "hours":
+        h = event.value;
+        break;
+      case "minutes":
+        m = event.value;
+        break;
+      case "seconds":
+        s = event.value;
+        break;
+      case "finished":
+        ajax_get('<%=start_auction_path(@auction)%>')
+        break;
+    }
+    // Assemble time format
+    if(d > 0) {
+      timeFormat = timeFormat.replace(/\%d/, d);
+      timeFormat = timeFormat.replace(/\(s\)/, Number(d) == 1 ? '' : 's');
+    } else {
+      timeFormat = timeFormat.replace(/%d day\(s\)/, '');
+    }
+    timeFormat = timeFormat.replace(/\%h/, h);
+    timeFormat = timeFormat.replace(/\%m/, m);
+    timeFormat = timeFormat.replace(/\%s/, s);
+    // Display
+    $this.html(timeFormat);
+  });
+});
+</script>
+<div id="time_to_start"></div>

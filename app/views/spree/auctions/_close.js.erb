@@ -1,0 +1,7 @@
+<% if @offer.present?%>
+  <% if @offer.offerer==@current_user %>
+  alert("恭喜您，竞标成功！ 中标价格<%=@offer.price%>！")
+  <%else%>
+  alert("谢谢您的参与，投标结束！ 中标价格<%=@offer.price%>！")
+  <%end%>
+<%end%>

@@ -1,10 +1,16 @@
 module Spree
   class Auction < ActiveRecord::Base
+    include Spree::AuctionTime
+    include Spree::AuctionMoney
+
     #attr_protected :status, :hightlight
     AuctionTypeEnum = Struct.new( :salesroom, :internet) ['1', '2']
     FeedbackEnum = Struct.new( :yes, :no) ['1', '2']
 
-    enum status: {:active => 0, :closed => 1, :canceled => 2, :bidding => 3 }
+    # active: now < starts_at
+    # bidding:  starts_at < now < ends_at
+    # closed:  ends_at < now
+    enum status: {:todo => 0, :done => 1, :canceled => 2, :doing => 3 }
 
     STATUSES = {:active => 0, :finished => 1, :canceled => 2, :waiting_for_offer => 3}
     MAX_EXPIRED_AFTER = 14
@@ -19,12 +25,12 @@ module Spree
 
     belongs_to :owner, :class_name => 'User'      #insurance company
     belongs_to :won_offer, :class_name => 'Offer'
-    has_many :bids, :dependent => :destroy #bid
+    has_many :bids, -> { order('created_at DESC') }, :dependent => :destroy #bid
     has_many :communications, :dependent => :delete_all
     has_and_belongs_to_many :tags,
       :after_add => :tag_counter_up,
       :after_remove => :tag_counter_down
-    has_and_belongs_to_many :invited_users, :class_name => "User"
+    #has_and_belongs_to_many :invited_users, :class_name => "User"
     has_many :rating_values, :class_name => 'AuctionRating', :dependent => :delete_all,
       :after_add => :calculate_rating,
       :after_remove => :calculate_rating
@@ -40,49 +46,50 @@ module Spree
    #   indexes :description
    #   #indexes :budget_id
    #   indexes tags(:id), :as => :tags_ids
-   #   has :expired_at
-   #   where 'auctions.private = 0 AND auctions.expired_at > NOW()'
+   #   has :ends_at
+   #   where 'auctions.private = 0 AND auctions.ends_at > NOW()'
    #   #set_property :delta => true
    # end
 
-    #validates :title, :presence => true, :length => { :within => 8..50}
-    #validates :description, :presence => true
+    validates :title, :presence => true, :length => { :within => 8..50}
+    validates :description, :presence => true
+    validates_uniqueness_of :status, scope: [:variant_id]
 
     #validates_inclusion_of :budget_id, :in => Budget.ids
 
     scope :has_tags, lambda { |tags| {:conditions => ['id in (SELECT auction_id FROM auctions_tags WHERE tag_id in (?))', tags.join(',')]}}
 
 
-    scope :public_auctions, lambda { where(:private => false)}
+    scope :public_auctions, -> { where(:private => false)}
 
-    scope :within_today, lambda { where(["(start_at > ?) and (expired_at < ?)", Date.current.to_time.beginning_of_day, Date.current.to_time.end_of_day])}
-    scope :closed, lambda { where(["expired_at > ? ",Time.now])}
-    scope :opened, lambda { where(["(start_at < ?) and (expired_at > ?)", Time.now, Time.now])}
-    scope :open, lambda { where(["start_at > ? ",Time.now]) }
+    scope :within_today, -> { where(["(starts_at > ?) and (ends_at < ?)", Date.current.to_time.beginning_of_day, Date.current.to_time.end_of_day])}
+    scope :closed, -> { where(["ends_at > ? ",Time.now])}
+    scope :opened, -> { where(["(starts_at < ?) and (ends_at > ?)", Time.now, Time.now])}
+    scope :open, -> { where(["starts_at > ? ",Time.now]) }
+    scope :active, ->{ where( active: true )}
 
+    after_initialize :correct_status
 
     before_update :won_offer_choosed, :if => :won_offer_id_changed?
     before_update :status_changed, :if => :down?
     before_validation :check_points, :on => :create, :if => :highlight
     after_create :use_points, :if => :highlight
-
     #create form
     attr_accessor :expired_after
     #validates_inclusion_of :expired_after, :in => (1..MAX_EXPIRED_AFTER).to_a.collect{|d| d}, :on => :create
+
+    # is open to bid
     def open?
-      (self.start_at.present?) and (status? :active) and ( self.start_at.future? )
+      doing?
     end
 
-    def opened?
-      (self.start_at.present?) and (status? :active) and ( DateTime.now > self.start_at ) and  ( DateTime.now < self.expired_at )
-    end
-
+    # is closed for bid
     def closed?
-      (self.start_at.present?) and ( DateTime.now > self.expired_at )
+      ! doing?
     end
 
     def close! #choose_win_offer
-      offer = self.offers.order("price DESC").first
+      offer = self.bids.order("price DESC").first
       unless offer.present?
         offer = new_offer( :price =>( self.starting_price > self.car.canzhi_jiazhi ?  self.starting_price : self.car.canzhi_jiazhi),:offerer_id => self.car.evaluator_id )
         offer.save!
@@ -101,12 +108,13 @@ module Spree
     end
 
     def current_price
-      if self.offers.present?
-        self.offers.collect(&:price).max
+      if self.bids.present?
+        self.bids.collect(&:price).max
       else
         self.starting_price
       end
     end
+
 
     #设置取消拍卖状态
     def waiting_for_offer!
@@ -122,9 +130,9 @@ module Spree
 
     #czy uzytkownik moze zlozyc oferte
     def allowed_to_offer? user
-      return false if user.nil? || self.owner?(user) #|| self.made_offer?(user)
-      return true if user.evaluator?
-      return true if user.deposit >= self.deposit
+      return false if user.blank? || self.owner?(user) #|| self.made_offer?(user)
+
+      return true if user.total_available_store_credit >= self.deposit
       #unnecessary but in most cases will end before its time
       #return true if self.public?
 
@@ -155,12 +163,13 @@ module Spree
 
     #用户是否是拍卖的所有者
     def owner? user
-      return false if user.nil?
-      self.owner_id == user.id
+      return false if user.blank?
+      self.owner == user.id
     end
 
     def invited? user
-      self.invited_users.exists?(:id => user.id)
+      false
+      #self.invited_users.exists?(:id => user.id)
     end
 
     #是否公开拍卖
@@ -179,7 +188,7 @@ module Spree
     #czy oferent złożył już oferte na aktualnym etapie
     def made_offer?(user)
       return false if user.nil?
-      self.offers.where(:offerer_id => user.id).count > 0
+      self.bids.where(:offerer_id => user.id).count > 0
     end
 
     def self.search_by_sphinx(query = '', search_in_description = false,
@@ -206,12 +215,12 @@ module Spree
         :page => page,
         :sort_mode => :extended,
         :match_mode => :extended,
-        :with => {:expired_at => now..(now+MAX_EXPIRED_AFTER.days)},
+        :with => {:ends_at => now..(now+MAX_EXPIRED_AFTER.days)},
         :order => order || "@rank DESC"
     end
 
     def new_offer params
-      self.offers.new params do |o|
+      self.bids.new params do |o|
         o.status = Offer::STATUSES[:active]
       end
     end
@@ -236,12 +245,12 @@ module Spree
       criteria.paginate(:per_page => 15, :page => page)
     end
 
-    def update_offers params
+    def update_bids params
       return true if params.nil?
 
       status_won = Offer::STATUSES[:won]
       saved = true
-      self.offers.each do |offer|
+      self.bids.each do |offer|
         offer_id = offer.id.to_s
         if params.has_key? offer_id
           save = offer.update_attributes(params[offer_id])
@@ -272,7 +281,7 @@ module Spree
     end
 
     def status_changed
-      self.expired_at = DateTime.now
+      self.ends_at = DateTime.now
       self.tags.delete_all
     end
 
@@ -293,5 +302,23 @@ module Spree
         self.errors.add(:highlight, I18n.t("activerecord.errors.models.auction.attributes.highlight.not_enought_points"))
       end
     end
+
+    #
+    def correct_status
+      if persisted?
+        if todo?
+          if ends_at < DateTime.current
+             done!
+          elsif starts_at < DateTime.current
+             doing!
+          end
+        elsif doing?
+          if ends_at < DateTime.current
+            done!
+          end
+        end
+      end
+    end
+
   end
 end

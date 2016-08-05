@@ -1,0 +1,26 @@
+<%
+#您没有车辆 [ 北京现代-瑞纳三厢-瑞纳 1.4 MT(108024) ] 的竞价权限
+#注：为了便于联系，请在说明里填写您的即时联系电话，我们将在第一时间联系您。
+#您已经申请了验证码 06H606L2 ，请等待管理员审核！
+car = @auction.car
+%>
+<div>
+  <h2> 您没有车辆 [ <%=car.model_title%>(<%= car.id%>) ] 的竞价权限 </h2>
+  <div class="prepend-1 append-1">
+  <%= form_for @message, :url=>apply_auction_path(@auction) do |f| %>
+    <%= render "layouts/error_messages", :target => @message %>
+    <%= f.hidden_field :topic %>
+    <p>
+      <%= f.label :body,"申请说明" %><br />
+      <%= f.text_area :body, :class => "" %><br />
+      #注：为了便于联系，请在说明里填写您的即时联系电话，我们将在第一时间联系您。
+
+    </p>
+
+    <p>
+      <%= f.submit "申请参与" %>
+    </p>
+    <br />
+  <% end %>
+</div>
+</div>

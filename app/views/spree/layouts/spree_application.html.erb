@@ -7,16 +7,16 @@
   <head data-hook="inside_head">
     <%= render partial: 'spree/shared/head' %>
   </head>
-  <body class="<%= body_class %>" id="<%= @body_id || 'default' %>" data-hook="body">
+  <body class="w1190" data-hook="body">
     <%= render partial: 'spree/shared/header' %>
 
-    <div class="container">
-      <div class="row" data-hook>
+    <div class="">
+      <div class="" data-hook>
         <%= breadcrumbs(@taxon) %>
 
         <%= render partial: 'spree/shared/sidebar' if content_for? :sidebar %>
 
-        <div id="content" class="<%= !content_for?(:sidebar) ? "col-sm-12" : "col-sm-8 col-md-9" %>" data-hook>
+        <div id="content" class="" data-hook>
           <%= flash_messages %>
           <%= yield %>
         </div>

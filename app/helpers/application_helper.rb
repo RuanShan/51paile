@@ -33,4 +33,11 @@ module ApplicationHelper
     end
   end
 
+  def format_datetime(datetime)
+      l(datetime, format: '%m月%d日 %H:%M') if datetime.present?
+  end
+
+  def format_time(datetime)
+    l(datetime, format: '%H:%M') if datetime.present?
+  end
 end

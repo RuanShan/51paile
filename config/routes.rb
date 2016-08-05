@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   Spree::Core::Engine.add_routes do
     resources :auctions do
       get :by_type, on: :collection
+      get :apply, on: :member
     end
 
     namespace :admin, path: Spree.admin_path do

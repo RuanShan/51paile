@@ -5,7 +5,7 @@ class CreateBids < ActiveRecord::Migration
       t.belongs_to :bidder, index: true, foreign_key: true, null: false
       t.boolean :winner, default: false
       t.decimal :amount, null: false
-
+      t.integer :status, null: false, default: 0
       t.timestamps null: false
     end
   end

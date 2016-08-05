@@ -1,14 +1,15 @@
-<div class="clearfix">
-  <div class="pull-left">
-    <%= taxonomy_list( @taxonomies )  %>
-   </div>
-   <div class="pull-right">
-     <%= render partial: 'spree/shared/slider' %>
-   </div>
-
+<div class="full-bg">
+  <div class="full-con clearfix">
+    <div class="fl">
+      <%= taxonomy_list( @taxonomies )  %>
+     </div>
+     <div class="fr">
+       <%= render partial: 'spree/shared/slider' %>
+     </div>
+  </div>
 </div>
 
-<div>
+<div class="full-con">
   <div data-hook="taxon_children">
     <% taxons = @taxonomies.collect{ |taxonomy| taxonomy.root } %>
       <% cache [I18n.locale, @taxonomies] do %>

@@ -2,7 +2,7 @@ class CreateAuctions < ActiveRecord::Migration
   def self.up
     create_table :spree_auctions do |t|
       t.boolean :private, :default => 0, :null => false
-      t.boolean :delta, :default => false
+      t.boolean :active, :default => true
       t.integer :status, :default => 0, :null => false
       t.references :variant, :default => 0, :null => false
       t.references :owner, :default => 0, :null => false

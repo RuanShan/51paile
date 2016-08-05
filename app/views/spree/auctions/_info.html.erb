@@ -1,0 +1,55 @@
+  <%  auction = product.master.active_auction  %>
+  <div class="clearfix auction-detail">
+    <h2 class=""><%= auction.title %></h2>
+
+    <div class="right-section">
+      <%= render :partial => "auction_form" %>
+      <% if @auction.opened? %>
+        <% if @auction.allowed_to_offer?(@current_user) %>
+        <%= render :partial=>'time_to_end_countdown'%>
+        <% end %>
+      <% end %>
+    </div>
+
+  </div>
+
+  <div>
+
+    <table class="car-detail">
+      <tr>
+        <th>车辆型号</th><td> <%=car.model_title%></td>
+        <th>初次登记日期</th> <td> <%=car.registered_at%> </td>
+        <th>过户时效</th> <td><%=accident.guohu_shixiao %></td>
+      </tr>
+      <tr>
+        <th>户籍所在地</th> <td><%=accident.huji_address %></td>
+        <th>车辆所在地</th> <td><%=accident.tingche_address %></td>
+        <th>登记证书</th> <td><%= attribute_value_t(accident, :dengji_zhengshu, :boolean) %></td>
+      </tr>
+      <tr>
+        <th>排量</th> <td><%=car.displacement%></td>
+        <th>档位</th> <td><%=Car::VARIATORS.key(car.variator)%></td>
+        <th>购置税</th> <td><%= attribute_value_t(accident, :gouzhi_shui, :boolean) %></td>
+      </tr>
+      <tr>
+        <td>车牌</td> <td><%= attribute_value_t(accident, :chepai, :boolean) %></td>
+        <td>钥匙</td> <td><%= attribute_value_t(accident, :yaoshi, :boolean) %></td>
+        <td>违章</td> <td><%= accident.weizhang.present? ? accident.weizhang : "未确定"%></td>
+      </tr>
+      <tr>
+        <td>咨询电话</td> <td colspan="5"><%=car.publisher.cellphone %></td>
+      </tr>
+      <tr>
+        <td>车辆备注</td> <td colspan="5"> <%= accident.cheliang_beizhu %></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="carimage-list">
+    <% @auction.car.pingan_image_urls.each{|file| %>
+     <%=  image_tag file, :class=>"watermark" %>
+    <% } %>
+    <% @auction.car.car_images.each{|file| %>
+     <%=  image_tag file.uploaded.url, :class=>"watermark" %>
+    <% } %>
+  </div>

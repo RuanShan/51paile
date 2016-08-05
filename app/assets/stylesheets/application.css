@@ -10,6 +10,262 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
+ *= require global
+ *= require frontend/superfish
+ *= require frontend/superfish-vertical
+ *= require spree/frontend/spree_static_content
+ *= require frontend/auction
+ *= require frontend/images
  *= require_self
  */
+
+ .full-bg{ margin:0 auto; background-color: #FDAA28;}
+
+ .w1190 .sh-header-banner, .w1190 .site-nav .site-nav-bd, .w1190 .breadcrumb, .w1190 .product_bd {
+     width: 1190px;
+     margin: auto;
+ }
+ .w1190 .idle-header {
+    width: 1190px;
+}
+ .site-nav {
+     z-index: 10000;
+     width: 100%;
+     background: #F5F5F5;
+     border-bottom: 1px solid #EEE;
+ }
+
+ .site-nav .site-nav-bd .site-nav-bd-l, .site-nav .site-nav-bd .site-nav-bd-l .menu, .site-nav .site-nav-bd .site-nav-bd-r .menu {
+     float: left;
+ }
+
+ .site-nav .site-nav-bd {
+     margin: 0 auto;
+     height: 35px;
+     background: #F5F5F5;
+ }
+
+ .site-nav-bd .menu a {
+     float: left;
+     margin-right: 7px;
+     font-size: 12px;
+     color: #6C6C6C;
+ }
+
+ .site-nav-bd a {
+    color: #3C3C3C;
+}
+ .site-nav-bd a:hover {
+     color: #F40;
+     text-decoration: none;
+ }
+
+ .site-nav-bd .menu .menu-hd {
+     z-index: 10002;
+     position: relative;
+     padding: 0 6px;
+     height: 35px;
+     line-height: 35px;
+     _display: inline;
+     _zoom: 1;
+ }
+ /*  header css */
+
+ .idle-header-wrap {
+ }
+ .idle-header {
+     height: 136px;
+     margin: 0 auto;
+     position: relative;
+     font-size: 14px;
+     font-family: Arial,Helvetica,sans-serif;
+  }
+ .idle-logo {
+     position: absolute;
+     display: block;
+     width: 93px;
+     height: 61px;
+     top: 22.5px;
+     left: 5px;
+ }
+
+ .idle-nav {
+     position: absolute;
+     bottom: 0px;
+     left: 250px;
+ }
+ .idle-nav2 {
+    width: 12em;
+    left: 0px;
+    bottom: 0px;
+    position: absolute;
+    font-size: 15px;
+ }
+ .idle-nav li {
+    display: inline;
+    line-height: 35px;
+    padding: 8px 0;
+    margin: 0 15px;
+    font-size: 15px;
+}
+.idle-nav2 li{
+  display: block;
+  background-color: #2A1E1C;
+  margin: 0;
+  text-align: center;
+  line-height: 35px;
+}
+.idle-nav2 li a{
+  color: #ffffff;
+}
+.idle-nav li.active {
+    border-bottom: 4px solid #000;
+}
+.idle-header a {
+    color: #000;
+    text-decoration: none;
+}
+ .idle-search {
+    position: absolute;
+    right: 65px;
+    top: 27px;
+}
+
+ .idle-search .form-group{ float: left; padding: 0 10px 0 0;}
+/*  floor css */
+ .floor h2 {
+     font-size: 22px;
+     font-family: 'Microsoft Yahei';
+     line-height: 22px;
+     padding-left: 10px;
+     font-weight: 400;
+     border-left: 3px solid #ffda44;
+ }
+ .floor .hd {
+     height: 22px;
+     padding: 8px 0;
+     zoom: 1;
+ }
+ .floor h2 a:hover {
+     color: #fc0;
+ }
+ .floor h2 a {
+     color: #333;
+ }
+/* crumbs */
+
+.breadcrumb{
+  margin: 0 auto 20px auto;
+  height: 24px;
+  overflow: hidden;
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.breadcrumb > li {
+    display: inline-block;
+}
+.breadcrumb a {
+    line-height: 20px;
+    font-size: 12px;
+    color: #898989;
+}
+.breadcrumb > li + li:before {
+    content: "/ ";
+    padding: 0 5px;
+    color: #ccc;
+}
+.breadcrumb > .active {
+    color: #777777;
+}
+
+
+/*product detail*/
+.product_wrapper{
+
+      margin-top: 19px;
+}
+.pm-main {
+    position: relative;
+    z-index: 6;
+    border: 1px solid #e9e9e9;
+    padding-left: 18px;
+}
+.pm-main h1 {
+    margin-top: 22px;
+    margin-bottom: 12px;
+    font-size: 16px;
+    color: #333;
+}
+.pm-main-l{width:440px;float:left;display:inline}
+.pm-main-r{margin-left:25px;*margin-left:20px;float:right;width:540px}
+.pm-last-item{margin-right:0}
+
+/* auction process flow */
+.auction-process-container{height:110px;margin-top:20px;border:1px solid #eeecec}
+.auction-process-container a{text-decoration:none}
+.auction-process{float:left;width:138px;height:70px;padding-top:40px;text-align:center;background-color:#f6f6f6}
+.auction-process h3 a{font-size:16px;font-family:"Microsoft YaHei",sans-serif;font-weight:700;color:#000}
+.auction-process h3 a:hover{color:#dc2625}
+.auction-process-help a{font-size:12px;color:#333}
+.auction-process-help a:hover{color:#dc2625}
+.auction-process-step{float:left;padding:19px 16px;background-position:right 20px}
+.auction-process-step-last{background:0 0}
+.auction-process-step div{margin-left:20px}
+.auction-process-step div a{font-size:16px;color:#000;font-weight:700;font-family:"Microsoft YaHei",sans-serif}
+.auction-process-step div a span{font-size:20px;margin-right:10px;width:28px;height:28px;display:block;float:left;text-align:center;line-height:28px;color:#000;background-position:right -173px}
+.auction-process-step div a:hover{color:#dc2625}
+.auction-process-step div a:hover span{color:#fff;background-position:-142px -173px}
+.auction-process-step ul{width:120px;clear:both;margin-left:20px}
+.auction-process-step ul li{background-position:left center;text-indent:10px;line-height:22px}
+.auction-process-step ul li a{font-size:12px;color:#888}
+.auction-process-step ul li a:hover{color:#dc2625}
+
+/* auction info */
+.module-sf {    width: 1190px;    margin: 0 auto;    color: #666; }
+.pm-subscribe-tip{margin-top:23px;margin-left:-15px}
+.pm-share{position:relative;float:left;margin-top:20px;color:#666}
+.pm-share s{width:16px;height:16px;float:left;margin-right:1px;background:transparent url(//gtms03.alicdn.com/tps/i3/T1aXJEFiNgXXbv3u_a-21-20.png) -3px 0 no-repeat}
+.pm-share-sina s{background-position:-24px -361px}
+.sns-btshare-panel #sns-btshare-content .sns-btshare-body ul{height:auto!important}
+.pm-bid-eyebrow li{margin-bottom:8px;position:relative}
+.pm-bid-eyebrow .rmb-unit{color:#d91615}
+#sf-price{z-index:9;margin-bottom:0}
+.sf-countdown{z-index:1}
+.auction-interaction .title{margin-left:20px;margin-right:27px}
+.auction-interaction .over-title{margin-right:18px}
+.auction-interaction .title-client{margin-right:18px}
+.pm-current-price{color:#d91615}
+.pm-bid-cnt{margin-left:20px;display:none}
+.pm-current-price em{font-size:26px;font-weight:700}
+.pm-bid-eyebrow var{display:inline-block;text-align:center;font:700 23px tahoma;color:#333;*display:inline;*zoom:1}
+.pm-bid-eyebrow em{font-weight:700;margin:0 3px 0 -5px;font-family:arial}
+.pm-bid-eyebrow em.m-i{font-size:18px;margin-left:0}
+.countdown em,.pm-bid-cnt em,.pm-bid-eyebrow .delayCnt{margin-left:3px}
+.countdown em{color:#666;font-weight:400}
+.pm-bid-eyebrow .countdown{margin-left:-2px}
+.pm-delay{display:none}
+.pm-delay s{width:13px;height:16px;background-position:-112px 0;vertical-align:middle;margin-left:15px;position:relative;top:-2px}
+.i-dialog .title{margin:0 27px 0 20px}
+.pm-bid-iframe{margin-top:15px;margin-bottom:10px;height:209px;height:230px\9}
+.pm-bid-nose{height:33px;line-height:33px;border:1px solid #dedede}
+.pm-bid-nose li{float:left;width:179px;background:transparent url(//gtms03.alicdn.com/tps/i3/T1B5YIXetiXXa6_dca-278-406.png) -160px -12px no-repeat}
+.pm-bid-nose .nose-rd{background-position:-161px -12px}
+.pm-bid-nose-holand li{width:135px}
+.pm-bid-nose .li-1rd{background-position:-161px -12px}
+.pm-bid-nose-holand .range{width:140px}
+.pm-bid-nose-holand .num{width:125px}
+.pm-bid-nose-holand .title{margin-right:10px}
+.pm-bid-mouse{padding:20px 0;line-height:24px;background:url(//img.alicdn.com/tps/TB18sQHIFXXXXXhXpXXXXXXXXXX.png) no-repeat 27px bottom}
+.pai-pay-infor{border-collapse:collapse;width:100%;height:80px}
+.pai-pay-infor tr{padding:0}
+.pai-pay-infor td{font-family:tahoma;font-size:12px;color:#777;cursor:pointer}
+.pay-mark{padding-left:20px;width:50px;color:#666;height:24px;line-height:20px;overflow:hidden;text-align:justify;text-align-last:justify;text-justify:distribute-all-lines;vertical-align:-10px;-moz-text-align-last:justify;-webkit-text-align-last:justify}
+.pay-mark:after{display:inline-block;content:'';overflow:hidden;width:100%;height:0}
+.pay-price{font-family:tahoma}
+.pai-space{padding-left:6px}
+.pay-first{position:relative;width:72px}
+.pay-first .pay-first-icon{position:absolute;top:50%;margin-top:-8px;left:6px;width:12px;height:12px;background-position:-40px -40px}
+.pay-type{color:#333}
+.pay-type-help{display:inline-block;*display:inline;*zoom:1;width:13px;height:13px;background-position:0 -160px;margin-left:5px;vertical-align:-2px}
+.pm-bid-mustache{margin-top:15px}

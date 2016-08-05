@@ -1,22 +1,25 @@
-<nav class="col-md-12">
-  <div id="main-nav-bar" class="navbar">
-    <figure id="logo" class="col-md-3 col-sm-2" data-hook>
-      <%= logo %>
-    </figure>
-    <ul class="nav navbar-nav navbar-right" data-hook>
-        <li id="search-bar" data-hook>
-          <%= render :partial => 'spree/shared/search' %>
-        </li>
-    </ul>
+  <div id="main-nav-bar" class="idle-header-wrap ">
+    <div class="idle-header">
+      <div id="logo" class="idle-logo" data-hook>
+        <%= logo %>
+      </div>
+      <ul class="idle-search" data-hook>
+          <li id="search-bar" data-hook>
+            <%= render :partial => 'spree/shared/search' %>
+          </li>
+      </ul>
 
-    <ul class="nav navbar-nav" data-hook>
-      <li id="home-link" data-hook><%= link_to Spree.t(:home), spree.root_path %></li>
-      <li ><%= link_to "拍卖中心", spree.auctions_path %></li>
-      <li ><%= link_to "降降降", spree.by_type_auctions_path %></li>
-      <li ><%= link_to "发布闲置", spree.new_auction_path %></li>
-      <li ><%= link_to "我的闲置", spree.new_auction_path %></li>
-      <%= render partial: 'spree/static_content/static_content_list', collection: Spree::Page.by_store(current_store).visible.header_links, as: :page %>
-    </ul>
+      <ul class="idle-nav2">
+        <li > <a> 拍卖</a></li>
+      </ul>
+      <ul class="idle-nav" data-hook>
+        <li id="home-link" data-hook><%= link_to Spree.t(:home), spree.root_path %></li>
+        <li ><%= link_to "拍卖中心", spree.auctions_path %></li>
+        <li ><%= link_to "降降降", spree.by_type_auctions_path %></li>
+        <li ><%= link_to "发布闲置", spree.new_auction_path %></li>
+        <li ><%= link_to "我的闲置", spree.new_auction_path %></li>
+        <%= render partial: 'spree/static_content/static_content_list', collection: Spree::Page.by_store(current_store).visible.header_links, as: :page %>
+      </ul>
 
+    </div>
   </div>
-</nav>

@@ -1,0 +1,20 @@
+<div class="last ">
+<%= render :partial=>"info" %>
+</div>
+<div style="clear: both"> </div>
+
+<% if @auction.communications.size > 0 %>
+  <h2 class="box">messages</h2>
+  <table class="communicationsTable">
+    <tbody>
+      <% @auction.communications.each do |msg| %>
+        <tr>
+          <td>nadano <%= format_time(msg.created_at) %></td>
+          <td><%= msg.body %></td>
+        </tr>
+      <%  end %>
+    </tbody>
+  </table>
+<% end %>
+
+
