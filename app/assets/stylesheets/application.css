@@ -11,11 +11,14 @@
  * file per style scope.
  *
  *= require global
+ *= require frontend/bootstrap
  *= require frontend/superfish
  *= require frontend/superfish-vertical
  *= require spree/frontend/spree_static_content
  *= require frontend/auction
  *= require frontend/images
+ *= require frontend/tip
+ *= require frontend/tipsy
  *= require_self
  */
 
@@ -83,7 +86,6 @@
  .idle-logo {
      position: absolute;
      display: block;
-     width: 93px;
      height: 61px;
      top: 22.5px;
      left: 5px;

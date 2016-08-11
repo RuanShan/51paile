@@ -29,21 +29,22 @@
           </div>
         </div>
 
-        <div class="col-md-8 col-sm-7 pm-main-r" data-hook="product_right_part">
+        <div class="col-md-8 col-sm-7 pm-main-l" data-hook="product_right_part">
           <div data-hook="product_right_part_wrap">
 
 
               <% if @auction.present? %>
-              <div>  <%= render :partial => 'auction' %>  </div>
+                <div>  <%= render :partial => 'auction' %>  </div>
               <% else %>
                 <div id="product-description" data-hook="product_description">
                   <h1 class="product-title" itemprop="name"><%= @product.name %></h1>
                 </div>
               <% end %>
 
-
           </div>
         </div>
+        <div>  <%= render :partial => 'auction_help' %>  </div>
+
       </div>
 
     </div>

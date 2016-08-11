@@ -6,12 +6,74 @@
 #起拍价： ￥1000元 加价幅度：￥500元  保留价：有
 #拍卖保证金：￥5000元  车辆承保金：￥44100元 过户保证金：中标价的10%(最低5000元，最高30000元)
 #拍卖时间  价格  用户ID
+auction = @auction
 %>
 <script type="text/javascript" charset="utf-8">
   g_auction_closed = <%= !@auction.open?%>
 </script>
+
+
 <div id="auction_info" class="auction-interaction">
-    <% if @auction.doing? %>
+    <% if @auction.todo? %>
+        <ul class="pm-bid-eyebrow">
+            <li id="sf-price">
+                <span class="title">  起拍价 </span>
+                <span class="pm-current-price J_Price">
+    			        <em><%= @auction.formatted_current_price %>  </em>
+                  <span class="J_AuctionTip auction-tip pm-current-price-tip hidden" style="display: none;">壹仟贰佰肆拾叁元<em class="detail-tip-icon detail-tip-icon-bottom"></em></span>
+                </span> <em class="rmb-unit">元</em>
+                <a class="pai-help" target="_blank" href="//www.taobao.com/market/paimai/sf-helpcenter.php"><i class="iconfont-sf"></i>竞买帮助</a>
+				    </li>
+
+            <%= content_tag "li", id: "sf-countdown", class: "J_PItem", data:{ itemid: auction.id, timetoend: auction.timetoend, timetostart: auction.timetostart, end: auction.endat, start: auction.startat, now: auction.nowat } do %>
+                <span class="title J_TimeTitle">距开始</span>
+                <span class="countdown J_TimeLeft"><var>00</var><em>天</em><var>09</var><em>时</em><var>00</var><em>分</em><var>04.3</var><em>秒</em></span>
+            <% end %>
+
+        </ul>
+        <div class="pm-bid-eye">
+                <span class="status-tip"></span>
+                <div class="pm-bid pm-before-apply">
+                    <dl class="pm-price J_PmPrice clearfix">
+                        <dt class="pm-h"><label for="J_PriceInput">出&nbsp;&nbsp;价</label></dt>
+                        <dd class="plus-minus-operation">
+                            <input type="text" class="pm-price-input" id="J_PriceInput" readonly="" disabled="disabled" value="1,243 " maxlength="" title="出价框，请输入拍卖价格" data-range="50.00" data-min="1243.00" data-max="9999999999.99">
+                            <input type="hidden" name="price" id="J_RealPrice" value="">
+                            <div class="pm-sign">
+                                <a href="#!/price/plus" onclick="return false;" class="plus J_Sign" data-spm-anchor-id="0.0.0.0">+</a>
+                                <a href="#!/price/minus" onclick="return false;" class="minus J_Sign">-</a>
+                            <span class="J_AuctionTip auction-tip pm-sign-tip hidden" style="display: none;">可成倍加价幅度出价<em class="detail-tip-icon detail-tip-icon-bottom"></em></span></div>
+                            <div id="J_CnMoney" class="detail-info-cn-money" style="display: none"><ul class="clearfix"></ul></div>
+                        </dd>
+                    </dl>
+                    <dl class="pm-message clearfix">
+                        <dt class="pm-h"></dt>
+                        <dd>
+                            <div class="line">
+                               <a href="//sf.taobao.com/pay_foregift_page.htm?item_id=536087664360" class="pm-button-new pm-apply-button i-b" name="apply" aria-role="button" target="_blank" id="submitDeposit">报名交保证金</a>
+                               <a href="//sf.taobao.com/pay_foregift_page.htm?item_id=536087664360" target="_blank" style="display:none;"></a>
+                               <a href="//www.taobao.com/markets/paimai/sf/feiyin?spm=a213w.6688509.detail.12.UVRH6b" target="_blank" class="J_PayTypes i-b pay-type" data-money="100">
+                                 <i class="iconfont-sf"></i>
+                                      保证金支付方式
+                                  <span class="J_AuctionTip auction-tip J_PayTypes-tip hidden">
+                                    <ul class="pay-type-list">
+                                        <li><h4>1.个人网银<b>（推荐）</b></h4><p>招商银行、浦发银行、中国银行、交通银行、农业银行、建设银行、邮储银行、工商银行</p></li>
+                                        <li><h4>2.企业网银</h4><p>工商银行、招商银行、浦发银行、农业银行、建设银行、中国银行</p></li>
+                                        <li><h4>3.银行卡快捷支付</h4><p>工商银行、招商银行、浦发银行、农业银行、建设银行、交通银行、邮储银行</p></li>
+                                        <li><h4>4.支付宝余额和余额宝</h4></li>
+                                    </ul>
+                                  </span>
+                                </a>
+                            </div>
+
+                            <div class="msg">
+                                    <p class="tips" data-tip-type="login" data-always="true">提醒：先报名交保证金再出价。如果您已经交付保证金，请<a href="#" class="J_Login login-tip">登录</a></p>
+                            </div>
+                          </dd>
+                    </dl>
+                </div>
+            </div>
+    <% elsif @auction.doing? %>
         <ul class="pm-bid-eyebrow">
             <li id="sf-price">
                 <span class="title">当前价</span>
@@ -26,7 +88,7 @@
                 <span class="countdown J_TimeLeft"><var>00</var><em>天</em><var>03</var><em>时</em><var>38</var><em>分</em><var>37.3</var><em>秒</em></span>
                 <span id="J_Delay" class="pm-delay"><em class="delayCnt">0</em>次延时</span>
             </li>
-          </ul>
+        </ul>
           <div class="pm-bid-eye">
                 <span class="status-tip status-ing"></span>
                 <div class="pm-bid pm-before-apply">

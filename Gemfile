@@ -36,6 +36,7 @@ source 'https://rails-assets.org' do
 end
 
 gem 'spree_static_content', path: './spree_static_content'
+
 #gem 'spree_auctions', path: './spree_auctions'
 
 # Use ActiveModel has_secure_password
