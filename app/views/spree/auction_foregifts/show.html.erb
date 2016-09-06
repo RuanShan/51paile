@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Auction:</strong>
+  <%= @auction_foregift.auction_id %>
+</p>
+
+<p>
+  <strong>Payment method:</strong>
+  <%= @auction_foregift.payment_method_id %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @auction_foregift.state %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @auction_foregift.amount %>
+</p>
+
+<%= link_to 'Edit', edit_auction_foregift_path(@auction_foregift) %> |
+<%= link_to 'Back', auction_foregifts_path %>

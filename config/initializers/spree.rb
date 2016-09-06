@@ -25,4 +25,6 @@ SpreeEditor::Config.tap do |config|
   config.current_editor = "CKEditor"
 end
 
+Spree::Ability.register_ability( Spree::AuctionAbility )
+
 Time::DATE_FORMATS[:auction_long] = '%Y/%m/%d %H:%M:%S'

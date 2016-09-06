@@ -223,9 +223,11 @@ textarea {
 
 body {
   margin: 0;
+  /*
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 20px;
+  */
   color: #333333;
   background-color: #ffffff;
 }
@@ -668,7 +670,7 @@ strong {
 }
 
 em {
-  font-style: italic;
+  /*font-style: italic*/
 }
 
 cite {
@@ -846,7 +848,7 @@ ol.inline > li {
   padding-left: 5px;
   *zoom: 1;
 }
-
+/*
 dl {
   margin-bottom: 20px;
 }
@@ -863,7 +865,7 @@ dt {
 dd {
   margin-left: 10px;
 }
-
+*/
 .dl-horizontal {
   *zoom: 1;
 }

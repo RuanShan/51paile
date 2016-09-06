@@ -1,0 +1,1 @@
+json.array! @auction_foregifts, partial: 'auction_foregifts/auction_foregift', as: :auction_foregift

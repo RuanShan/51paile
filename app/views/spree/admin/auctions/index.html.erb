@@ -17,6 +17,9 @@
         <th >
           <%= Spree::Auction.human_attribute_name(:starts_at) %>
         </th>
+        <th >
+          <%= Spree::Auction.human_attribute_name(:status) %>
+        </th>
         <% if has_variants %>
           <th>
             <%= Spree::Variant.model_name.human %>
@@ -25,6 +28,7 @@
         <th>
           <%= Spree::Auction.human_attribute_name(:title) %>
         </th>
+        <th>  <%= Spree::Auction.human_attribute_name(:active) %> </th>
         <th class="actions"></th>
       </tr>
     </thead>
@@ -33,6 +37,7 @@
       <% (@product.variant_auctions).each do |auction| %>
         <tr id="<%= spree_dom_id auction %>" data-hook="auctions_row">
           <td><%= l auction.starts_at, :format => :short %>          </td>
+          <td><%= auction.status %> </td>
           <td class="auction">
             <%= link_to auction.title, spree.edit_admin_product_auction_url( @product, auction) %>
           </td>
@@ -40,6 +45,7 @@
             <td><%= options_text_for(auction.variant) %></td>
           <% end %>
 
+          <td><%= auction.active %> </td>
           <td class="actions actions-2 text-right">
             <%= link_to_with_icon('edit', Spree.t(:edit), spree.edit_admin_product_auction_url(@product, auction), class: 'btn btn-primary btn-sm', no_text: true, data: { action: 'edit' }) if can? :edit, auction %>
             <%= link_to_delete(auction, { url: spree.admin_product_auction_url(@product, auction), no_text: true }) if can? :destroy, auction %>

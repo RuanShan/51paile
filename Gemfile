@@ -23,13 +23,14 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+gem 'state_machines-activerecord', '~> 0.2'
 
 gem 'spree', '~> 3.1.0'
 # custom user login menu
 gem 'spree_auth_devise', path: './spree_auth_devise'
 gem 'spree_gateway', '~> 3.1.0'
-
 gem 'spree_editor',  github: "spree/spree_editor", branch: "3-1-stable"
+gem 'spree_alipay', path: './spree_alipay'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-datetimepicker'
@@ -38,6 +39,8 @@ end
 gem 'spree_static_content', path: './spree_static_content'
 
 #gem 'spree_auctions', path: './spree_auctions'
+
+gem 'faye-websocket'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

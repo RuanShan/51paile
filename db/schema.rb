@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160729030658) do
+ActiveRecord::Schema.define(version: 20160904062401) do
 
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_file_name",               null: false
@@ -107,30 +107,47 @@ ActiveRecord::Schema.define(version: 20160729030658) do
   add_index "spree_assets", ["viewable_id"], name: "index_assets_on_viewable_id"
   add_index "spree_assets", ["viewable_type", "type"], name: "index_assets_on_viewable_type_and_type"
 
+  create_table "spree_auction_foregifts", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "auction_id"
+    t.integer  "payment_method_id"
+    t.string   "state"
+    t.decimal  "amount",                       precision: 10, scale: 2, default: 0.0, null: false
+    t.datetime "created_at",                                                          null: false
+    t.datetime "updated_at",                                                          null: false
+    t.string   "number",            limit: 15
+  end
+
+  add_index "spree_auction_foregifts", ["number"], name: "index_spree_auction_foregifts_on_number"
+
   create_table "spree_auctions", force: :cascade do |t|
-    t.boolean  "private",           default: false,  null: false
-    t.boolean  "delta",             default: false
-    t.integer  "status",            default: 0,      null: false
-    t.integer  "variant_id",        default: 0,      null: false
-    t.integer  "owner_id",          default: 0,      null: false
+    t.boolean  "private",                      default: false,  null: false
+    t.boolean  "active",                       default: true
+    t.integer  "status",                       default: 0,      null: false
+    t.integer  "variant_id",                   default: 0,      null: false
+    t.integer  "owner_id",                     default: 0,      null: false
     t.integer  "won_offer_id"
-    t.string   "title",             default: "",     null: false
-    t.text     "description",       default: "",     null: false
-    t.boolean  "highlight",         default: false
+    t.string   "title",                        default: "",     null: false
+    t.text     "description",                  default: "",     null: false
+    t.boolean  "highlight",                    default: false
     t.datetime "starts_at"
     t.datetime "ends_at"
     t.datetime "display_starts_at"
     t.datetime "display_ends_at"
-    t.float    "evaluated_price",   default: 0.0
-    t.float    "starting_price",    default: 0.0
-    t.float    "price_increment",   default: 0.0
-    t.float    "reserve_price",     default: 0.0
-    t.float    "deposit",           default: 5000.0
-    t.integer  "offers_count",      default: 0
-    t.integer  "visits",            default: 0,      null: false
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.float    "evaluated_price",              default: 0.0
+    t.float    "starting_price",               default: 0.0
+    t.float    "price_increment",              default: 0.0
+    t.float    "reserve_price",                default: 0.0
+    t.float    "deposit",                      default: 5000.0
+    t.integer  "offers_count",                 default: 0
+    t.integer  "visits",                       default: 0,      null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+    t.string   "number",            limit: 15
+    t.integer  "product_id"
   end
+
+  add_index "spree_auctions", ["number"], name: "index_spree_auctions_on_number"
 
   create_table "spree_bids", force: :cascade do |t|
     t.integer  "auction_id",                 null: false
@@ -139,6 +156,7 @@ ActiveRecord::Schema.define(version: 20160729030658) do
     t.decimal  "amount",                     null: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.integer  "status",     default: 0,     null: false
   end
 
   add_index "spree_bids", ["auction_id"], name: "index_spree_bids_on_auction_id"

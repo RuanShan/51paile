@@ -24,6 +24,7 @@ zh-CN:
         ends_at: "拍卖结束时间"
         display_starts_at: "展示开始时间"
         display_ends_at: "展示结束时间"
+        active: "是否激活"
         remark: "备注"
       spree/calculator/tiered_flat_rate:
         preferred_base_amount:

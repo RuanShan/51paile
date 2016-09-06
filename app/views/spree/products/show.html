@@ -5,7 +5,7 @@
   <% cache cache_key_for_product do %>
     <div class="pm-main clearfix" data-hook="product_show" itemscope itemtype="https://schema.org/Product">
       <h1> <%= @auction.title %> </h1>
-      <div  class="row" >
+      <div  class="" >
         <div class="col-md-4 col-sm-5 pm-main-l" data-hook="product_left_part">
           <div data-hook="product_left_part_wrap">
             <div id="product-images" data-hook="product_images">
@@ -20,7 +20,13 @@
             </div>
 
             <div data-hook="product_properties">
-              <%= render :partial => 'properties' %>
+              <div class="pm-remind">
+                <span class="pm-apply i-b"><em class="J_Applyer">29</em> 人报名</span>
+                <span class="pm-separate i-b"> </span>
+        		    <span class="pm-reminder i-b"><em>873</em> 人设置提醒</span>
+                <span class="pm-separate i-b"> </span>
+  						  <span class="pm-surround i-b"><em id="J_Looker">25272</em> 次围观</span>
+  		        </div>
             </div>
 
             <div data-hook="promotions">
@@ -29,9 +35,8 @@
           </div>
         </div>
 
-        <div class="col-md-8 col-sm-7 pm-main-l" data-hook="product_right_part">
+        <div class="col-md-8 col-sm-7 pm-main-l auction-interaction" data-hook="product_right_part">
           <div data-hook="product_right_part_wrap">
-
 
               <% if @auction.present? %>
                 <div>  <%= render :partial => 'auction' %>  </div>
@@ -44,6 +49,7 @@
           </div>
         </div>
         <div>  <%= render :partial => 'auction_help' %>  </div>
+        <div>  <%= render :partial => 'pay_tip_modal' %>  </div>
 
       </div>
 

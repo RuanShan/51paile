@@ -1,0 +1,121 @@
+.bf-select{float:left;outline:0;display:inline;cursor:pointer;font-size:12px;padding:3px 10px;margin-right:6px;position:relative;font-weight:400;border:1px solid #dedede}
+.bf-select .bf-menu-button-dropdown{top:10px;right:8px;width:10px;height:5px;position:absolute;background:url(//gtms04.alicdn.com/tps/i4/T1J6x.FkFeXXX_ownc-30-40.png) -10px -25px no-repeat}
+.bf-menu-button-open .bf-menu-button-dropdown{background-position:-10px -10px}
+.bf-menu{border:1px solid #dedede;background-color:#fff}
+.bf-menu .bf-menuitem{color:#333;height:26px;font-size:12px;cursor:pointer;overflow:hidden;line-height:26px;padding-left:30px}
+.bf-menu .bf-menuitem-hover{color:#f60;background-color:#fff8f3}
+.bf-menu .bf-menuitem-selected{color:#f60;font-weight:700;background:url(//gtms03.alicdn.com/tps/i3/T1J8TvFlVbXXXugmZ.-11-8.png) no-repeat 10px 10px}
+.bf-popupmenu-hidden{visibility:hidden}.ks-drag,.ks-drag-active,.ks-drag-hover,.ks-dragbottom,.ks-dragcenter,.ks-dragtop,.ks-scrollbar,.ks-track,.ks-track-active,.ks-track-hover{width:10px}
+.ks-scrollbar{position:absolute;top:0;right:0;bottom:0;background-color:#E3E3E3}
+.ks-track-hover{background-color:#D9D8D8}
+.ks-track-active{background-color:#D9D8D8}
+.ks-track{position:absolute}
+.ks-drag{background-color:#979797;position:absolute}
+.ks-drag .ks-dragbottom,.ks-drag .ks-dragtop{display:none}
+.ks-drag .ks-dragcenter{position:absolute;top:50%;margin-top:-10px;height:20px;background-color:#999}
+.ks-drag-hover{background-color:#979797}
+.ks-drag-active{background-color:#979797}
+.mini-drag,.mini-drag-active,.mini-drag-hover,.mini-dragbottom,.mini-dragcenter,.mini-dragtop,.mini-scrollbar,.mini-track,.mini-track-active,.mini-track-hover{width:10px}
+.mini-scrollbar{position:absolute;top:0;right:0;bottom:0;background-color:#E3E3E3}
+.mini-track-hover{background-color:#D9D8D8}
+.mini-track-active{background-color:#D9D8D8}
+.mini-track{position:absolute}
+.mini-drag{background-color:#979797;position:absolute}
+.mini-drag .mini-dragbottom,.mini-drag .mini-dragtop{display:none}
+.mini-drag .mini-dragcenter{position:absolute;top:50%;margin-top:-10px;height:20px;background-color:#999}
+.mini-drag-hover{background-color:#979797}
+.mini-drag-active{background-color:#979797}body{*overflow-x:hidden}
+body .site-nav .site-nav-bd{width:1190px}
+body .pai-to-top{margin-left:605px}
+body .placeholder-text{font-family:arial,tahoma,'Hiragino Sans GB','\5b8b\4f53',sans-serif}
+body .clearfix{zoom:1;clear:none!important}
+body .clearfix:after{content:"";clear:both;display:block!important;height:0}
+body .w-b{white-space:nowrap;text-overflow:ellipsis;overflow:hidden}
+body .i-b{display:inline-block;*display:inline;*zoom:1}
+.sf-wrap{width:1190px;margin-left:auto;margin-right:auto;color:#333}
+.sf-wrap .hidden{display:none}
+.sf-wrap .no-border{border:none!important}
+.sf-empty{width:200px;height:110px;margin:60px auto;color:#777;font-size:14px;padding-left:220px;font-family:'\5b8b\4f53',arial tahoma,'Hiragino Sans GB',sans-serif;background:url(//gtms03.alicdn.com/tps/i3/TB1cHpJFVXXXXbYXpXXce9VWFXX-206-110.gif) no-repeat 0 50%}
+.sf-empty p{padding-top:35px;white-space:nowrap}
+.sf-empty a{color:#d91615;text-decoration:underline}
+.sf-empty i{font-style:normal;font-family:SimSun,arial tahoma,'Hiragino Sans GB',sans-serif}
+#server-num{color:#fff}
+.crumbs{padding:10px 0 30px;color:#999}
+.crumbs a{background:url(//assets.alicdn.com/sys/common/img/crumb_bg.gif) no-repeat 100% 50%;padding-right:14px;margin-right:4px;line-height:20px;font-size:12px;color:#666}
+.fn-ff-yahei{font-style:normal;font-family:'Microsoft Yahei',simhei,sans-serif}
+.crumbs{padding-top:20px;padding-bottom:20px}
+.link{color:#197ac4;cursor:pointer;text-decoration:none}
+.link:hover{text-decoration:underline}
+.invisiable{visibility:hidden}
+.hidden{display:none!important}
+.required{color:#d91615;font-style:normal;font-family:tahoma,arial,'Hiragino Sans GB','\5b8b\4f53'}
+.labeld{color:#999;font-weight:700}
+.fields{color:#333;font-weight:700;position:relative}
+.fields a{font-weight:400}
+td.required{width:12px;text-align:left}
+td.labeld{width:100px}
+.input{color:#333;height:18px;line-height:18px;padding:3px 10px;vertical-align:middle;background-color:#fff;border:1px solid #dedede}
+.tiny-input{width:65px}
+.small-input{width:348px}
+.normal-input{width:190px}
+.street-input{color:#333;height:32px;width:348px;resize:none;padding:3px 10px;background-color:#fff;border:1px solid #dedede}
+.error{border-color:#ff7f7d!important;background-color:#fff2f2!important}
+.error-msg{display:none;color:#ff5d5a;padding-left:18px;font-weight:400;vertical-align:top;margin-top:5px}
+.checkCode-error{padding-left:0;margin-top:10px}
+.error-msg .error-icon{vertical-align:top;margin-right:4px}
+.server-error{display:inline}
+#content{width:1190px;margin:0 auto}
+.hd{height:16px;line-height:16px;position:relative;margin-bottom:15px}
+.hd h3{height:16px;overflow:hidden;line-height:16px}
+.hd h3 .title{float:left;font-size:16px;height:16px}
+.hd h3 .sub-title{float:left;color:#bb8c00;height:16px;padding:0 15px;display:inline;line-height:18px;font-weight:400;background:url(//gtms02.alicdn.com/tps/i2/TB1IaQsGVXXXXbvXVXXzCmo.VXX-12-16.png) no-repeat left center;margin-left:12px}
+.bail-info{border:1px solid #dedede;background-color:#f7f7f7}
+.bidder-info{border:1px solid #dedede;border-top:0 none;overflow:auto}
+.bail-info .bail-section{margin:20px 30px}
+.bidder-info .bidder-section{margin:40px 50px}
+.bidder-info .bidder-section .bd{padding:0 20px}
+.bail-info .bail-count{padding:8px 0;line-height:26px;border-bottom:1px dotted #d3d3d3;font-size:14px;font-weight:700;color:#333}
+.bail-info .bail-count span{*zoom:1;*display:inline;display:inline-block;vertical-align:middle}
+.bail-info .bail-count .price{color:#d91615;font-size:22px;margin-left:15px;margin-right:20px;font-family:'Microsoft Yahei' tahoma arial 'Hiragino Sans GB'}
+.bail-info .bail-desc{color:#666;font-size:14px;padding:8px 0;line-height:20px}
+.bail-info .bail-desc a{color:#197ac4;text-decoration:none}
+.bail-info .bail-desc a:hover{text-decoration:underline}
+.bidder-info table{width:100%}
+.bidder-info table td{padding:4px 1px;vertical-align:top}
+.bidder-info .checkCode-img{height:26px;vertical-align:middle}
+.bidder-info .agreement-content{padding:20px;border:1px solid #dedede;margin-top:10px}
+.bidder-info .agreement-detail{color:#999;height:200px;line-height:20px;overflow-y:scroll;font-family:'\5b8b\4f53' tahoma,arial,'Hiragino Sans GB'}
+.bidder-info .agreement input{vertical-align:middle;margin-right:5px}
+.bidder-info .agreement .fields{font-weight:400;padding:4px 0}
+.submit-content{position:relative;text-align:center}
+.submit{color:#fff;width:190px;height:46px;display:block;cursor:pointer;line-height:46px;text-align:center;margin:15px auto 0;background-color:#d91615;border:1px solid #ba0100;text-decoration:none;font-size:14px;font-weight:700}
+.submit.disabled{cursor:not-allowed;border-color:#8a8a8a;background-color:#999}
+.identity-error .submit{width:120px;height:36px;line-height:36px}
+.account-error,.identity-error{width:360px;height:256px;margin:0 auto;padding-top:2px;position:relative;padding-left:105px;background:url(//gtms01.alicdn.com/tps/i1/TB1TIXSFVXXXXbGXpXXkKOA2VXX-70-116.png) no-repeat 0 30px}
+.identity-error{height:150px;background-position:0 10px}
+.pai-error-msg{font-size:14px;padding-top:40px;margin-bottom:60px}
+.pai-status-notice{margin:10px 0;font-size:14px;font-weight:700}
+.pai-price{color:red}
+.pai-status-account{color:#777;margin:16px 0;font-size:12px;font-weight:400}
+.pai-status-account b{color:red}
+.pai-seperater{height:0;width:100%;border:none;margin-bottom:13px;border-bottom:1px dashed #e9e9e9}
+.pai-left-step-desc{color:#777;margin-bottom:50px}
+.pai-left-step-desc dt{font-weight:700;margin-bottom:10px}
+.pai-left-step-desc dd,.pai-left-step-desc dt,.pai-left-step-desc li{margin:6px 0}
+.account-error .submit{margin-left:0}
+.have-question,.how-to-bangding,.how-to-jiaji,.how-to-shiming{position:absolute;bottom:15px;left:330px}
+.how-to-jiaji{left:425px;width:60px}
+.have-question{left:500px;width:60px}
+.pai-jumping{height:54px;padding:40px 0 40px 100px;width:200px;margin:50px auto;color:#777;line-height:2;background:url(//gtms03.alicdn.com/tps/i3/TB1uJ55GXXXXXcUXXXXxWNQ4XXX-69-120.png) no-repeat 0 0 #fff}
+.pai-jumping a{color:#197ac4;text-decoration:underline}
+.pai-jumping em{font-size:14px;color:#333}
+.agreement_bold{font-weight:700;text-decoration:underline}
+.bd .priority-tip{font-size:14px;font-weight:400;padding-left:116px}
+.bd .priority-tip img{position:relative;top:4px;margin-right:4px}
+.bd .priority-tip span{margin:0 3px;background:url(//gtms03.alicdn.com/tps/i3/TB1KLG0GXXXXXXcXFXX52LiUFXX-52-180.png) no-repeat -40px 2px;padding-right:15px}
+.bd .priority-tip a{color:#197ac4}
+.bd .card-num{float:left}
+.bd .card-error{float:left}
+.fields .card-tips{float:left;margin-top:10px;color:#5ea0d6;font-weight:400;width:800px}
+.fields .card-tips a{color:#5ea0d6}
+.fields .card-tips i{position:relative;top:2px;display:inline-block;margin-right:5px;width:14px;height:14px;background:url(//gtms03.alicdn.com/tps/i3/TB1HwQiIpXXXXayXVXXMs3..VXX-14-14.png) no-repeat left center}

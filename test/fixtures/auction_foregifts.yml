@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  auction_id: 1
+  payment_method_id: MyString
+  state: MyString
+  amount: 9.99
+
+two:
+  auction_id: 1
+  payment_method_id: MyString
+  state: MyString
+  amount: 9.99

@@ -14,30 +14,28 @@ module Spree
 
     STATUSES = {:active => 0, :finished => 1, :canceled => 2, :waiting_for_offer => 3}
     MAX_EXPIRED_AFTER = 14
-    ORDER_MODES = [
-      ["po nazwie", "title DESC", 0],
-      ["po statusie", "status ASC", 1],
-      ["po ID malejaco", "id DESC", 2],
-      ["po ID rosnaco", "id ASC", 3],
-      ["po OCENIE malejaco", "rating DESC", 4],
-      ["po OCENIE rosnaco", "rating ASC", 5]
-    ]
+
+    extend FriendlyId
+    friendly_id :number, slug_column: :number, use: :slugged
+    include Spree::Core::NumberGenerator.new(prefix: 'R')
 
     belongs_to :owner, :class_name => 'User'      #insurance company
     belongs_to :won_offer, :class_name => 'Offer'
     has_many :bids, -> { order('created_at DESC') }, :dependent => :destroy #bid
-    has_many :communications, :dependent => :delete_all
-    has_and_belongs_to_many :tags,
-      :after_add => :tag_counter_up,
-      :after_remove => :tag_counter_down
+    #has_many :communications, :dependent => :delete_all
+    #has_and_belongs_to_many :tags,
+    #  :after_add => :tag_counter_up,
+    #  :after_remove => :tag_counter_down
     #has_and_belongs_to_many :invited_users, :class_name => "User"
-    has_many :rating_values, :class_name => 'AuctionRating', :dependent => :delete_all,
-      :after_add => :calculate_rating,
-      :after_remove => :calculate_rating
+    #has_many :rating_values, :class_name => 'AuctionRating', :dependent => :delete_all,
+    #  :after_add => :calculate_rating,
+    #  :after_remove => :calculate_rating
 
     belongs_to :auctioneer, :class_name => 'User' #huachen company
+    belongs_to :variant
     belongs_to :product
-    has_many :action_histories
+    #has_many :action_histories
+    has_many :auction_foregifts
     #validates :price_increment, :numericality => {:greater_than => 0}
     #validates :reserve_price, :numericality => {:greater_than => 0}
 
@@ -53,7 +51,7 @@ module Spree
 
     validates :title, :presence => true, :length => { :within => 8..50}
     validates :description, :presence => true
-    validates_uniqueness_of :status, scope: [:variant_id]
+    #validates_uniqueness_of :status, scope: [:variant_id]
 
     #validates_inclusion_of :budget_id, :in => Budget.ids
 
@@ -73,7 +71,8 @@ module Spree
     before_update :won_offer_choosed, :if => :won_offer_id_changed?
     before_update :status_changed, :if => :down?
     before_validation :check_points, :on => :create, :if => :highlight
-    after_create :use_points, :if => :highlight
+
+    after_create :deactive_others
     #create form
     attr_accessor :expired_after
     #validates_inclusion_of :expired_after, :in => (1..MAX_EXPIRED_AFTER).to_a.collect{|d| d}, :on => :create
@@ -228,7 +227,6 @@ module Spree
     #wyszukiwanie aukcji dla admina
     def self.admin_search(query = "", selected_date = nil, status = Array.new, order = 0, page = 1)
       criteria = self.includes(:owner)
-      criteria.order(ORDER_MODES[order][1])
 
       unless query.empty?
         criteria = criteria.where("auctions.title like ? OR auctions.id=?", "%#{query}%", query)
@@ -292,8 +290,10 @@ module Spree
       end
     end
 
-    def use_points
-      self.owner.bonuspoints.use!(-10, self.owner_id, 4) if self.highlight
+    def deactive_others
+      if self.active?
+        Auction.where.not(id: self.id).where( variant: variant).update_all( active: false )
+      end
     end
 
     def check_points
@@ -306,6 +306,8 @@ module Spree
     #
     def correct_status
       if persisted?
+        #ends_at ||= DateTime.current
+        #starts_at ||= DateTime.current
         if todo?
           if ends_at < DateTime.current
              done!

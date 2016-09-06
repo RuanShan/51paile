@@ -22,7 +22,6 @@ auction = @auction
     			        <em><%= @auction.formatted_current_price %>  </em>
                   <span class="J_AuctionTip auction-tip pm-current-price-tip hidden" style="display: none;">壹仟贰佰肆拾叁元<em class="detail-tip-icon detail-tip-icon-bottom"></em></span>
                 </span> <em class="rmb-unit">元</em>
-                <a class="pai-help" target="_blank" href="//www.taobao.com/market/paimai/sf-helpcenter.php"><i class="iconfont-sf"></i>竞买帮助</a>
 				    </li>
 
             <%= content_tag "li", id: "sf-countdown", class: "J_PItem", data:{ itemid: auction.id, timetoend: auction.timetoend, timetostart: auction.timetostart, end: auction.endat, start: auction.startat, now: auction.nowat } do %>
@@ -50,7 +49,7 @@ auction = @auction
                         <dt class="pm-h"></dt>
                         <dd>
                             <div class="line">
-                               <a href="//sf.taobao.com/pay_foregift_page.htm?item_id=536087664360" class="pm-button-new pm-apply-button i-b" name="apply" aria-role="button" target="_blank" id="submitDeposit">报名交保证金</a>
+                              <%= link_to "报名交保证金", apply_auction_path( auction), { class: "pm-button-new pm-apply-button i-b", id: "submitDeposit", target: "_blank", name: "apply" } %>
                                <a href="//sf.taobao.com/pay_foregift_page.htm?item_id=536087664360" target="_blank" style="display:none;"></a>
                                <a href="//www.taobao.com/markets/paimai/sf/feiyin?spm=a213w.6688509.detail.12.UVRH6b" target="_blank" class="J_PayTypes i-b pay-type" data-money="100">
                                  <i class="iconfont-sf"></i>
@@ -67,7 +66,11 @@ auction = @auction
                             </div>
 
                             <div class="msg">
-                                    <p class="tips" data-tip-type="login" data-always="true">提醒：先报名交保证金再出价。如果您已经交付保证金，请<a href="#" class="J_Login login-tip">登录</a></p>
+                                    <p class="tips" data-tip-type="login" data-always="true">提醒：先报名交保证金再出价。
+                                      <% unless try_spree_current_user %>
+                                      如果您已经交付保证金，请<a href="#" class="J_Login login-tip">登录</a>
+                                      <% end %>
+                                    </p>
                             </div>
                           </dd>
                     </dl>
@@ -81,7 +84,6 @@ auction = @auction
     			        <em><%= @auction.formatted_current_price %> </em>
                   <span class="J_AuctionTip auction-tip pm-current-price-tip hidden">柒万捌佰元<em class="detail-tip-icon detail-tip-icon-bottom"></em></span>
                 </span> <em class="rmb-unit">元</em>
-                <a class="pai-help" target="_blank" href="//www.taobao.com/markets/paimai/sf-helpcenter?path=sf-helpcenter-sy"><i class="iconfont-sf"></i>竞买帮助</a>
             </li>
             <li class="J_PItem" id="sf-countdown" data-itemid="536334542630" data-now="1470392483703" data-timetoend="13118081" data-timetostart="-29873000" data-end="1470405600000" data-start="1470362400000">
                 <span class="title J_TimeTitle">距结束</span>
@@ -93,7 +95,7 @@ auction = @auction
                 <span class="status-tip status-ing"></span>
                 <div class="pm-bid pm-before-apply">
                     <dl class="pm-price J_PmPrice clearfix">
-                        <dt class="pm-h"><label for="J_PriceInput">出&nbsp;&nbsp;价</label></dt>
+                        <dt class="pm-h"><span for="J_PriceInput">出&nbsp;&nbsp;价</span></dt>
                         <dd class="plus-minus-operation">
                             <input type="text" class="pm-price-input" id="J_PriceInput" readonly="" disabled="disabled" value="71,000 " maxlength="" title="出价框，请输入拍卖价格" data-range="200.00" data-min="71000.00" data-max="9999999999.99">
                             <input type="hidden" name="price" id="J_RealPrice" value="">
@@ -108,10 +110,9 @@ auction = @auction
                         <dt class="pm-h"></dt>
                         <dd>
                             <div class="line">
-                              <a href="//sf.taobao.com/pay_foregift_page.htm?item_id=536334542630" class="pm-button-new pm-apply-button i-b" name="apply" aria-role="button" target="_blank" id="submitDeposit">报名交保证金</a>
+                              <%= link_to "报名交保证金", apply_auction_path( auction), { class: "pm-button-new pm-apply-button i-b", id: "submitDeposit", target: "_blank", name: "apply" } %>
                               <a href="//sf.taobao.com/pay_foregift_page.htm?item_id=536334542630" target="_blank" style="display:none;"></a>
                               <a href="//www.taobao.com/markets/paimai/sf/feiyin?spm=a213w.6688509.detail.12.UVRH6b" target="_blank" class="J_PayTypes i-b pay-type" data-money="9000">
-                                      <i class="iconfont-sf"></i>
                                         保证金支付方式
                                     <span class="J_AuctionTip auction-tip J_PayTypes-tip hidden" style="display: none;">
                                       <ul class="pay-type-list">
@@ -120,53 +121,16 @@ auction = @auction
                                           <li><h4>3.银行卡快捷支付</h4><p>工商银行、招商银行、浦发银行、农业银行、建设银行、交通银行、邮储银行</p></li>
                                           <li><h4>4.支付宝余额和余额宝</h4></li>
                                       </ul>
-                                  <div class="more-pay-type"><a href="//www.taobao.com/markets/paimai/sf/feiyin?spm=a213w.6688509.detail.12.UVRH6b" target="_blank">更多支付帮助</a></div><em class="detail-tip-icon detail-tip-icon-top"></em></span></a>
+                                   </span></a>
 
-                                                                      <div class="hidden J_PayType_5">
-                                      <ul class="pay-type-list">
-                                          <li><h4>1.个人网银<b>（推荐）</b></h4><p>招商银行、浦发银行、中国银行、交通银行、农业银行、建设银行、邮储银行、工商银行</p></li>
-                                          <li><h4>2.企业网银</h4><p>工商银行、招商银行、浦发银行、农业银行、建设银行、中国银行</p></li>
-                                          <li><h4>3.银行卡快捷支付</h4><p>工商银行、招商银行、浦发银行、农业银行、建设银行、交通银行、邮储银行</p></li>
-                                          <li><h4>4.支付宝余额和余额宝</h4></li>
-                                      </ul>
-                                  </div>
-                                  <div class="hidden J_PayType_50">
-                                      <ul class="pay-type-list">
-                                          <li><h4>1.个人网银<b>（推荐）</b></h4><p>招商银行、浦发银行、中国银行、交通银行、农业银行、建设银行、邮储银行、工商银行</p></li>
-                                          <li><h4>2.企业网银</h4><p>工商银行、招商银行、浦发银行、农业银行、建设银行、中国银行</p></li>
-                                          <li><h4>3.银行卡快捷支付</h4><p>工商银行、招商银行、浦发银行、农业银行、建设银行、交通银行、邮储银行</p></li>
-                                          <li><h4>4.支付宝余额和余额宝</h4></li>
-                                      </ul>
-                                  </div>
-                                  <div class="hidden J_PayType_100">
-                                      <ul class="pay-type-list">
-                                          <li><h4>1.个人网银<b>（推荐）</b></h4><p>招商银行、浦发银行、中国银行、交通银行、农业银行、建设银行、邮储银行、工商银行</p></li>
-                                          <li><h4>2.企业网银</h4><p>工商银行、招商银行、浦发银行、农业银行、建设银行、中国银行</p></li>
-                                          <li><h4>3.银行卡快捷支付</h4><p>工商银行、招商银行、浦发银行、农业银行、建设银行、交通银行、邮储银行</p></li>
-                                          <li><h4>4.支付宝余额和余额宝</h4></li>
-                                      </ul>
-                                  </div>
-                                  <div class="hidden J_PayType_200">
-                                      <ul class="pay-type-list">
-                                          <li><h4>1.个人网银<b>（推荐）</b></h4><p>招商银行、浦发银行、中国银行、交通银行、农业银行、建设银行、邮储银行、工商银行</p></li>
-                                          <li><h4>2.企业网银</h4><p>工商银行、招商银行、浦发银行、农业银行、建设银行、中国银行</p></li>
-                                          <li><h4>3.银行卡快捷支付</h4><p>工商银行、招商银行、浦发银行、农业银行、建设银行、交通银行、邮储银行</p></li>
-                                          <li><h4>4.支付宝余额和余额宝</h4></li>
-                                      </ul>
-                                  </div>
-                                  <div class="hidden J_PayType_200_over">
-                                      <ul class="pay-type-list">
-                                          <li><h4>1.个人网银<b>（推荐）</b></h4><p>招商银行、浦发银行、中国银行、交通银行、农业银行、建设银行、邮储银行、工商银行</p></li>
-                                          <li><h4>2.企业网银</h4><p>工商银行、招商银行、浦发银行、农业银行、建设银行、中国银行</p></li>
-                                          <li><h4>3.银行卡快捷支付</h4><p>工商银行、招商银行、浦发银行、农业银行、建设银行、交通银行、邮储银行</p></li>
-                                          <li><h4>4.支付宝余额和余额宝</h4></li>
-                                      </ul>
-                                  </div>
-                                </div>
-                                <div class="msg">
-                                    <p class="tips" data-tip-type="login" data-always="true">提醒：先报名交保证金再出价。如果您已经交付保证金，请<a href="#" class="J_Login login-tip">登录</a></p>
-                                </div>
-
+                              </div>
+                              <div class="msg">
+                                    <p class="tips" data-tip-type="login" data-always="true">提醒：先报名交保证金再出价。
+                                      <% unless try_spree_current_user %>
+                                       如果您已经交付保证金，请<a href="#" class="J_Login login-tip">登录</a>
+                                       <% end %>
+                                     </p>
+                              </div>
                         </dd>
                     </dl>
                 </div>
@@ -248,131 +212,4 @@ auction = @auction
          </table>
      </div>
 
-<table class="auctionInfo">
-
-  <% if @auction.open? || @auction.todo? || @auction.closed? %>
-  <tr>
-    <td>当前价</td> <td colspan="2"><%= @auction.open? ? @auction.current_price : ( @auction.todo? ? "还没开始":"已经结束")  %></td>
-  </tr>
-  <tr>
-    <td>开始时间</td> <td colspan="2"><%= format_time(@auction.starts_at)%></td>
-  </tr>
-  <tr>
-    <td>结束时间</td> <td colspan="2"><%= format_time(@auction.ends_at)%></td>
-  </tr>
-  <tr>
-    <td>
-      <% if @auction.open? %>
-      正在拍卖
-      <% elsif @auction.todo? %>
-      距开始
-      <% else %>
-      已结束
-      <% end %>
-      </td>
-    <td colspan="2">
-      <% if @auction.open? %>
-           <%=  Time.at( (@auction.ends_at-Time.now) ).utc.strftime("%H:%M:%S") %>
-      <% else %>
-          <% if @auction.todo? %>
-            <% if @auction.starts_at.today? %>
-              <%= render :partial=>"time_to_start_countdown"%>
-            <% else %>
-              <%= distance_of_time_in_words_to_now(@auction.starts_at) %>
-            <% end %>
-          <% else %>
-              <%= distance_of_time_in_words_to_now(@auction.ends_at) %>
-          <% end %>
-      <% end %>
-    </td>
-  </tr>
-  <%else%>
-  <tr><td>当前价</td> <td><%= 0 %></td> </tr>
-  <tr><td>计划开始日期</td> <td><%= escape_date(@auction.starts_at)  %></td> </tr>
-  <tr><td>计划结束日期</td> <td><%= escape_date(@auction.ends_at) %></td> </tr>
-  <tr><td>距开始</td> <td><%= distance_of_time_in_words_to_now(@auction.starts_at)  if @auction.starts_at.present?%></td> </tr>
-  <%end%>
-
-  <tr>
-    <td>拍卖权限</td>
-    <td colspan="2">
-      <% if @auction.open? %>
-
-        <% if @auction.allowed_to_offer?(spree_current_user) %>
-          <%= form_for Offer.new,:url=>bid_auction_path, :remote=>true do |offer| %>
-            <table>
-              <tr>
-                <td><%= offer.label :price, '竞标价格' %>:</td>
-                <td><%= offer.text_field :price, :value=>(@auction.current_price+@auction.price_increment), :class => "span-2" %>
-                  <%= offer.submit '出价', :confirm => "确认您的出价" %>
-                </td>
-              </tr>
-              <tr>
-                <td></td>
-                <td><div id="bid_result"></div></td>
-              </tr>
-            </table>
-          <% end %>
-
-        <% end %>
-      <% elsif @auction.todo? %>
-        <% if @auction.allowed_to_offer?(spree_current_user) %>
-          "您可以投标，请耐心等待"
-        <% else %>
-          <% if false #if signed_in? and spree_current_user.messages.sent.with_auction(@auction).present? %>
-          您已申请参与拍卖,等待管理员审核
-          <% else%>
-          您没有参与拍卖权限   >> <%= link_to "点击申请参与拍卖", apply_auction_path(@auction) %>
-          <% end %>
-        <% end %>
-      <% else %>
-        <%=  "无" %>
-      <% end %>
-
-    </td>
-  </tr>
-</table>
-<table class="auctionInfo">
-  <tr>
-    <td>
-      起拍价
-    </td>
-    <td><%= @auction.starting_price %> </td>
-    <td>
-      加价幅度
-    </td>
-    <td><%= @auction.price_increment %></td>
-    <td>
-      保留价
-    </td>
-    <td><%= @auction.reserve_price>0 ? "有":"没有"  %></td>
-  </tr>
-  <tr>
-    <td>
-      拍卖保证金
-    </td>
-    <td><%= @auction.deposit %></td>
-    <td>
-      车辆承保金
-    </td>
-    <td></td>
-    <td>
-      过户保证金
-    </td>
-    <td><%= raw "中标价的10%</br>(最低5000元，最高30000元)"  %></td>
-  </tr>
-</table>
-
-<table class="offerInfo">
-  <tr>
-    <th>拍卖时间</th>
-    <th>价格</th>
-    <th>用户ID</th>
-  </tr>
-  <% @auction.bids.limit(6).each do |bid| %>
-  <tr>
-    <td><%= format_time bid.created_at%> </td><td><%= bid.price%> </td><td><%= bid.offerer.login%> </td>
-  </tr>
-  <% end %>
-</table>
 </div>

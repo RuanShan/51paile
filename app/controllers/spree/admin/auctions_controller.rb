@@ -5,6 +5,7 @@ module Spree
       before_action :load_edit_data, except: :index
       before_action :load_index_data, only: :index
 
+      belongs_to 'spree/product', :find_by => :slug
 
       private
 
@@ -17,11 +18,11 @@ module Spree
       end
 
       def load_index_data
-        @product = Product.friendly.includes(*variant_index_includes).find(params[:product_id])
+        @product = Product.friendly.find(params[:product_id])
       end
 
       def load_edit_data
-        @product = Product.friendly.includes(*variant_edit_includes).find(params[:product_id])
+        @product = Product.friendly.find(params[:product_id])
         @variants = @product.variants.map do |variant|
           [variant.sku_and_options_text, variant.id]
         end
@@ -38,6 +39,10 @@ module Spree
         [
           :variants_including_master
         ]
+      end
+
+      def find_resource
+          parent.send(controller_name).friendly.find(params[:id])
       end
 
     end

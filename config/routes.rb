@@ -1,9 +1,15 @@
 Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
   Spree::Core::Engine.add_routes do
+
+
+
     resources :auctions do
       get :by_type, on: :collection
       get :apply, on: :member
+      resources :auction_foregifts, only: [:index] do
+        post :prepare, on: :collection
+      end
     end
 
     namespace :admin, path: Spree.admin_path do

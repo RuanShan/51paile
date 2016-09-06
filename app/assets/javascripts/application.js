@@ -36,4 +36,11 @@ jQuery(document).ready(function ($) {
       var jssor_slider1 = new $JssorSlider$('slider1_container', options);
     }
 
+    $("#submitDeposit").click(function(){
+      $.simplemodal($('#payTipModal'),
+        { minHeight:240,	minWidth: 450,
+          opacity:80,overlayCss: {backgroundColor:"#000"}
+        });
+    })
+
 });

@@ -1,0 +1,1 @@
+json.partial! "auction_foregifts/auction_foregift", auction_foregift: @auction_foregift
