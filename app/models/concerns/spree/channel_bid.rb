@@ -3,8 +3,8 @@ module Spree
     extend ActiveSupport::Concern
 
     included do
-      class_attributes :channel_attribute_names
-      channel_attribute_names = [:status, :number, :current_price, :channel_bids]
+      class_attribute :channel_attribute_names
+      self.channel_attribute_names = [:price, :status]
     end
 
     def channel_attributes

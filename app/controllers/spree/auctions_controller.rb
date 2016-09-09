@@ -12,12 +12,12 @@ module Spree
 
     def bid
       bid = @auction.bids.build( bidder: @user ) do|bid|
-        bid.price = params[:price]
+        bid.price = params[:price].to_i
       end
 
-      bid.save
+      bid.save!
 
-      AuctionChannel.broadcast_to(
+      AuctionsChannel.broadcast_to(
         @auction.channel_name,
         @auction.channel_attributes
       )

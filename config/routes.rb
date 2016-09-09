@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resources :auctions do
       get :by_type, on: :collection
       get :apply, on: :member
+      post :bid, on: :member
       resources :auction_foregifts, only: [:index] do
         post :prepare, on: :collection
       end

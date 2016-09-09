@@ -12,7 +12,7 @@ auction = @auction
   g_auction_closed = <%= !@auction.open?%>
 </script>
 
-
+<%= form_for :auction, url: bid_auction_path( @auction ), remote:true, html: { id: "J_PmForm" }  do %>
 <div id="auction_info" class="auction-interaction">
     <% if @auction.todo? %>
         <ul class="pm-bid-eyebrow">
@@ -137,11 +137,12 @@ auction = @auction
                 </div>
            <% else %>
                 <div class="pm-bid ">
+                  <div id="J_PmMessage"> </div>
                     <dl class="pm-price J_PmPrice clearfix">
                         <dt class="pm-h"><label for="J_PriceInput">出&nbsp;&nbsp;价</label></dt>
                         <dd class="plus-minus-operation">
-                          <%= text_field_tag "bid_price", @auction.formatted_current_price, readonly: true, id: "J_PriceInput", class: "pm-price-input", title: "出价框，请输入拍卖价格", data:{ range: @auction.price_increment, min: @auction.starting_price, max: 9999999999.99, num: @auction.number} %>
-                            <input type="hidden" name="price" id="J_RealPrice" value="">
+                          <%= text_field_tag "price", @auction.formatted_current_price, readonly: true, id: "J_PriceInput", class: "pm-price-input", title: "出价框，请输入拍卖价格", data:{ range: @auction.price_increment, min: @auction.starting_price, max: 9999999999.99, num: @auction.number} %>
+                            <input type="hidden" name="pricexx" id="J_RealPrice" value="">
                             <div class="pm-sign">
                                 <a href="#!/price/plus" class="plus J_Sign" data-spm-anchor-id="0.0.0.0">+</a>
                                 <a href="#!/price/minus" class="minus J_Sign">-</a>
@@ -241,5 +242,5 @@ auction = @auction
              </tbody>
          </table>
      </div>
-
 </div>
+<% end %>
