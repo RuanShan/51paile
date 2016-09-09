@@ -24,7 +24,7 @@ auction = @auction
                 </span> <em class="rmb-unit">元</em>
 				    </li>
 
-            <%= content_tag "li", id: "sf-countdown", class: "J_PItem", data:{ itemid: auction.id, timetoend: auction.timetoend, timetostart: auction.timetostart, end: auction.endat, start: auction.startat, now: auction.nowat } do %>
+            <%= content_tag "li", id: "sf-countdown", class: "J_PItem", data:{ itemid: auction.number, timetoend: auction.timetoend, timetostart: auction.timetostart, end: auction.endat, start: auction.startat, now: auction.nowat } do %>
                 <span class="title J_TimeTitle">距开始</span>
                 <span class="countdown J_TimeLeft"><var>00</var><em>天</em><var>09</var><em>时</em><var>00</var><em>分</em><var>04.3</var><em>秒</em></span>
             <% end %>
@@ -85,14 +85,15 @@ auction = @auction
                   <span class="J_AuctionTip auction-tip pm-current-price-tip hidden">柒万捌佰元<em class="detail-tip-icon detail-tip-icon-bottom"></em></span>
                 </span> <em class="rmb-unit">元</em>
             </li>
-            <li class="J_PItem" id="sf-countdown" data-itemid="536334542630" data-now="1470392483703" data-timetoend="13118081" data-timetostart="-29873000" data-end="1470405600000" data-start="1470362400000">
+            <%= content_tag "li", id: "sf-countdown", class: "J_PItem", data:{ itemid: auction.number, timetoend: auction.timetoend, timetostart: auction.timetostart, end: auction.endat, start: auction.startat, now: auction.nowat } do %>
                 <span class="title J_TimeTitle">距结束</span>
                 <span class="countdown J_TimeLeft"><var>00</var><em>天</em><var>03</var><em>时</em><var>38</var><em>分</em><var>37.3</var><em>秒</em></span>
                 <span id="J_Delay" class="pm-delay"><em class="delayCnt">0</em>次延时</span>
-            </li>
+            <% end %>
         </ul>
           <div class="pm-bid-eye">
                 <span class="status-tip status-ing"></span>
+           <% unless spree_current_user.biddable?(  @auction ) %>
                 <div class="pm-bid pm-before-apply">
                     <dl class="pm-price J_PmPrice clearfix">
                         <dt class="pm-h"><span for="J_PriceInput">出&nbsp;&nbsp;价</span></dt>
@@ -134,7 +135,36 @@ auction = @auction
                         </dd>
                     </dl>
                 </div>
-            </div>
+           <% else %>
+                <div class="pm-bid ">
+                    <dl class="pm-price J_PmPrice clearfix">
+                        <dt class="pm-h"><label for="J_PriceInput">出&nbsp;&nbsp;价</label></dt>
+                        <dd class="plus-minus-operation">
+                          <%= text_field_tag "bid_price", @auction.formatted_current_price, readonly: true, id: "J_PriceInput", class: "pm-price-input", title: "出价框，请输入拍卖价格", data:{ range: @auction.price_increment, min: @auction.starting_price, max: 9999999999.99, num: @auction.number} %>
+                            <input type="hidden" name="price" id="J_RealPrice" value="">
+                            <div class="pm-sign">
+                                <a href="#!/price/plus" class="plus J_Sign" data-spm-anchor-id="0.0.0.0">+</a>
+                                <a href="#!/price/minus" class="minus J_Sign">-</a>
+                            <span class="J_AuctionTip auction-tip pm-sign-tip hidden" style="display: none;">可成倍加价幅度出价<em class="detail-tip-icon detail-tip-icon-bottom"></em></span></div>
+                            <div id="J_CnMoney" class="detail-info-cn-money" style="display: none"><ul class="clearfix"></ul></div>
+                        </dd>
+                    </dl>
+                    <dl class="pm-message clearfix">
+                        <dt class="pm-h"></dt>
+                        <dd>
+                            <div class="line">
+                                                                    <!--即将开始：will-btn;正在开拍:on-btn;已经结束:over-btn-->
+                                    <a href="javascript:void(0)" class="pm-button-new on-btn i-b" name="price" aria-role="button" id="J_GivePrice">出&nbsp;&nbsp;&nbsp;&nbsp;价</a>
+								                            </div>
+                                                                                                                                         <div class="msg">
+                                            <p class="tips" data-tip-type="paimai">提醒：先交保证金再出价，至少两人报名且出价达保留价，才能成交</p>
+                                        </div>
+
+                        </dd>
+                    </dl>
+                </div>
+          <% end %>
+          </div>
     <% elsif @auction.done? %>
         <ul class="pm-bid-eyebrow">
               <li>

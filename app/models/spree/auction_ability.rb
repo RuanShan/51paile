@@ -5,6 +5,7 @@ module Spree
     def initialize(user)
       if user.persisted?
         can :apply, Auction
+        can :bid, Auction
       end
 
     end

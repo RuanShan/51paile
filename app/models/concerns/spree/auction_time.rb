@@ -21,15 +21,15 @@ module Spree
     end
 
     def startat
-      (starts_at.to_f.round(3)*1000).to_i
+      (starts_at.to_f*1000).to_i
     end
 
     def endat
-      (ends_at.to_f.round(3)*1000).to_i
+      (ends_at.to_f*1000).to_i
     end
 
     def nowat
-      (DateTime.current.to_f.round(3)*1000).to_i
+      (DateTime.current.to_f*1000).to_i
     end
 
     def formatted_closed_at
@@ -55,7 +55,7 @@ module Spree
        end
 
        period
-       
+
     end
 
   end

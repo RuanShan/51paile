@@ -12,6 +12,7 @@ module Spree
     belongs_to :payment_method
 
     alias_attribute :total, :amount # for alipay provider
+    scope :paid, ->{ with_state(:paid) }
 
     state_machine initial: :checkout do
       event :complete do

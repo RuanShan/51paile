@@ -2,6 +2,7 @@ module Spree
   class Auction < ActiveRecord::Base
     include Spree::AuctionTime
     include Spree::AuctionMoney
+    include Spree::ChannelAuction
 
     #attr_protected :status, :hightlight
     AuctionTypeEnum = Struct.new( :salesroom, :internet) ['1', '2']
@@ -38,16 +39,6 @@ module Spree
     has_many :auction_foregifts
     #validates :price_increment, :numericality => {:greater_than => 0}
     #validates :reserve_price, :numericality => {:greater_than => 0}
-
-   # ThinkingSphinx::Index.define :auction, :with => :active_record do
-   #   indexes :title
-   #   indexes :description
-   #   #indexes :budget_id
-   #   indexes tags(:id), :as => :tags_ids
-   #   has :ends_at
-   #   where 'auctions.private = 0 AND auctions.ends_at > NOW()'
-   #   #set_property :delta => true
-   # end
 
     validates :title, :presence => true, :length => { :within => 8..50}
     validates :description, :presence => true
@@ -190,58 +181,12 @@ module Spree
       self.bids.where(:offerer_id => user.id).count > 0
     end
 
-    def self.search_by_sphinx(query = '', search_in_description = false,
-        tags_ids = [], budget_ids = [], order = nil, page = 1, per_page = 15)
-
-      unless search_in_description || query.length == 0
-        query = '@title ' + query
-      end
-
-      unless tags_ids.empty?
-        #options.merge! :weights => {:tag_list => 2}
-        query += ' @tags_ids '+tags_ids.join(' | ')+''
-      end
-
-      unless budget_ids.empty?
-        #options.merge! :weights => {:tag_list => 2}
-        query += ' @budget_id '+budget_ids.join(' | ')+''
-      end
-      now = DateTime.now
-
-      Auction.search query,
-        :field_weights => {:tags_ids => 3, :title => 2, :description => 1},
-        :per_page => per_page,
-        :page => page,
-        :sort_mode => :extended,
-        :match_mode => :extended,
-        :with => {:ends_at => now..(now+MAX_EXPIRED_AFTER.days)},
-        :order => order || "@rank DESC"
-    end
-
     def new_offer params
       self.bids.new params do |o|
         o.status = Offer::STATUSES[:active]
       end
     end
 
-    #wyszukiwanie aukcji dla admina
-    def self.admin_search(query = "", selected_date = nil, status = Array.new, order = 0, page = 1)
-      criteria = self.includes(:owner)
-
-      unless query.empty?
-        criteria = criteria.where("auctions.title like ? OR auctions.id=?", "%#{query}%", query)
-      end
-
-      unless selected_date.nil?
-        criteria = criteria.where("DATE(auctions.created_at)=?", selected_date)
-      end
-
-      unless status.empty?
-        criteria = criteria.where(:status => status)
-      end
-
-      criteria.paginate(:per_page => 15, :page => page)
-    end
 
     def update_bids params
       return true if params.nil?
@@ -258,7 +203,12 @@ module Spree
       saved
     end
 
+    def channel_name
+      "auction_#{self.number}"
+    end
+
     private
+
     def down?
       self.status_changed? && [STATUSES[:canceled], STATUSES[:finished]].include?(self.status)
     end

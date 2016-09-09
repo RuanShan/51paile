@@ -1,13 +1,27 @@
 module Spree
 
   class AuctionsController <  StoreController
-    before_action :load_object, only: [:apply]
+    before_action :load_object, only: [:apply,:bid]
 
     def index
     end
 
 
     def by_type
+    end
+
+    def bid
+      bid = @auction.bids.build( bidder: @user ) do|bid|
+        bid.price = params[:price]
+      end
+
+      bid.save
+
+      AuctionChannel.broadcast_to(
+        @auction.channel_name,
+        @auction.channel_attributes
+      )
+
     end
 
     def apply

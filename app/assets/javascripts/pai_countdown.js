@@ -3,8 +3,10 @@ jQuery(document).ready(function ($) {
   // product list count down
   $(".pai-countdown").each( function(){
     var $this = $(this);
-    var now = new Date( $this.data('now'));
-    var end = new Date( $this.data('end'));
+    var local_now = new Date( );
+    var local_offset=local_now.getTimezoneOffset()*60000;
+    var now = new Date( $this.data('now')  );
+    var end = new Date( $this.data('end')  );
     var d, h, m, s;
 
     $this.countdown( now, end, function(event){
@@ -44,6 +46,8 @@ jQuery(document).ready(function ($) {
   // product list count down
   $("#sf-countdown").each( function(){
     var $this = $(this);
+    var local_now = new Date( );
+    var local_offset=local_now.getTimezoneOffset()*60000;
     var now = new Date( $this.data('now'));
     var end = new Date( $this.data('end'));
     var d, h, m, s;
