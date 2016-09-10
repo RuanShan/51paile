@@ -141,11 +141,11 @@ auction = @auction
                     <dl class="pm-price J_PmPrice clearfix">
                         <dt class="pm-h"><label for="J_PriceInput">出&nbsp;&nbsp;价</label></dt>
                         <dd class="plus-minus-operation">
-                          <%= text_field_tag "price", @auction.formatted_current_price, readonly: true, id: "J_PriceInput", class: "pm-price-input", title: "出价框，请输入拍卖价格", data:{ range: @auction.price_increment, min: @auction.starting_price, max: 9999999999.99, num: @auction.number} %>
-                            <input type="hidden" name="pricexx" id="J_RealPrice" value="">
+                          <%= text_field_tag "formatted_biddable_price", @auction.formatted_biddable_price, readonly: true, id: "J_PriceInput", class: "pm-price-input", title: "出价框，请输入拍卖价格", data:{ range: @auction.price_increment, min: @auction.starting_price, max: 9999999999.99, num: @auction.number} %>
+                          <%= hidden_field_tag "price", @auction.current_price, id: "J_RealPrice" %>
                             <div class="pm-sign">
-                                <a href="#!/price/plus" class="plus J_Sign" data-spm-anchor-id="0.0.0.0">+</a>
-                                <a href="#!/price/minus" class="minus J_Sign">-</a>
+                                <a href="javascript:void(0)" class="plus J_SignPlus" data-spm-anchor-id="0.0.0.0">+</a>
+                                <a href="javascript:void(0)" class="minus J_SignMinus">-</a>
                             <span class="J_AuctionTip auction-tip pm-sign-tip hidden" style="display: none;">可成倍加价幅度出价<em class="detail-tip-icon detail-tip-icon-bottom"></em></span></div>
                             <div id="J_CnMoney" class="detail-info-cn-money" style="display: none"><ul class="clearfix"></ul></div>
                         </dd>
@@ -154,15 +154,32 @@ auction = @auction
                         <dt class="pm-h"></dt>
                         <dd>
                             <div class="line">
-                                                                    <!--即将开始：will-btn;正在开拍:on-btn;已经结束:over-btn-->
-                                    <a href="javascript:void(0)" class="pm-button-new on-btn i-b" name="price" aria-role="button" id="J_GivePrice">出&nbsp;&nbsp;&nbsp;&nbsp;价</a>
-								                            </div>
-                                                                                                                                         <div class="msg">
-                                            <p class="tips" data-tip-type="paimai">提醒：先交保证金再出价，至少两人报名且出价达保留价，才能成交</p>
-                                        </div>
+                              <!--即将开始：will-btn;正在开拍:on-btn;已经结束:over-btn-->
+                              <a href="javascript:void(0)" class="pm-button-new on-btn i-b" name="price" aria-role="button" id="J_GivePrice">出&nbsp;&nbsp;&nbsp;&nbsp;价</a>
+								            </div>
+                            <div class="msg">
+                              <p class="tips" data-tip-type="paimai">提醒：先交保证金再出价，至少两人报名且出价达保留价，才能成交</p>
+                            </div>
 
                         </dd>
                     </dl>
+                </div>
+                <div class="my-info clearfix" id="J_User" style="display: block;">
+                  <div class="my-info-hd bidder">
+                    <i class="iconfont-sf my-icon"></i>我的竞买号 <em class="J_NO">Z8235</em>
+                    <input type="hidden" value="false" class="J_IsPriorityUser">
+                  </div>
+                  <div class="my-info-detail bidder">
+                        <div class="line my-name">
+                            <span>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名: </span>
+                            <strong class="J_Name">张哲</strong>
+                        </div>
+                        <div class="line">
+                            <span>已 出 价: </span>
+                            <strong class="J_MyBidCnt"> 0 </strong>
+                            <em>次</em>
+                        </div>
+                  </div>
                 </div>
           <% end %>
           </div>
@@ -179,8 +196,8 @@ auction = @auction
               </li>
         </ul>
         <div class="pm-bid bid-over">
-                                   <h1 class="bid-fail"><s></s>本场拍卖已结束 ！</h1>
-                              <div class="close-price"></div>
+          <h1 class="bid-fail"><s></s>本场拍卖已结束 ！</h1>
+          <div class="close-price"></div>
        </div>
     <% end %>
 

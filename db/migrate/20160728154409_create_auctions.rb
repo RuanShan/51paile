@@ -16,11 +16,11 @@ class CreateAuctions < ActiveRecord::Migration
       t.datetime :display_starts_at
       t.datetime :display_ends_at
 
-      t.float :evaluated_price, :default=>0   #评估价
-      t.float :starting_price, :default=>0    #起拍价
-      t.float :price_increment, :default=>0   #加价幅度
-      t.float :reserve_price, :default=>0     #保留价
-      t.float :deposit, :default=>5000        #拍卖保证金
+      t.integer :evaluated_price, :default=>0   #评估价
+      t.integer :starting_price, :default=>0    #起拍价
+      t.integer :price_increment, :default=>0   #加价幅度
+      t.integer :reserve_price, :default=>0     #保留价
+      t.integer :deposit, :default=>5000        #拍卖保证金
       #t.integer :delay_period #延时周期
       #t.integer :auction_type, :default=>0 #拍卖规则 0：倒计时出价， 1：一口价，
       #t.integer :auction_mall, :default=>0   #拍卖厅， 0:倒计时出价大厅   1:vip,

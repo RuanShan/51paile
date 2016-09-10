@@ -207,6 +207,10 @@ module Spree
       "auction_#{self.number}"
     end
 
+    def biddable_price
+      bids_count == 0 ?  starting_price : ( current_price + price_increment )
+    end
+
     private
 
     def down?

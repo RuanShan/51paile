@@ -1,1 +1,6 @@
+http://wulfric.me/2016/09/active-job-action-cable-in-rails/
+
 http://www.cnblogs.com/wizardguy/p/how-to-design-a-auction-system.html
+
+
+http://liamkaufman.com/blog/2013/02/27/adding-real-time-to-a-restful-rails-app/

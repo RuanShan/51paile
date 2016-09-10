@@ -18,7 +18,7 @@ module Spree
       bid.save!
 
       AuctionsChannel.broadcast_to(
-        @auction.channel_name,
+        @auction,
         @auction.channel_attributes
       )
 

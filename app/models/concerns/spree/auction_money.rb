@@ -3,7 +3,7 @@ module Spree
     extend ActiveSupport::Concern
 
     included do
-      formatted_money_attributes :current_price, :evaluated_price, :starting_price, :price_increment, :reserve_price, :deposit
+      formatted_money_attributes :evaluated_price, :starting_price, :price_increment, :reserve_price, :deposit, :biddable_price, :current_price
     end
 
     class_methods do

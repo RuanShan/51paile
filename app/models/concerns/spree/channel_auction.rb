@@ -4,7 +4,7 @@ module Spree
 
     included do
       class_attribute :channel_attribute_names
-      self.channel_attribute_names = [:status, :number, :current_price, :channel_bids]
+      self.channel_attribute_names = [:status, :number, :biddable_price, :formatted_biddable_price, :current_price, :formatted_current_price, :channel_bids]
     end
 
     def channel_attributes
