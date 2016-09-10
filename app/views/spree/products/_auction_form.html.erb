@@ -136,6 +136,7 @@ auction = @auction
                     </dl>
                 </div>
            <% else %>
+                <% auction_foregift = spree_current_user.auction_foregift( auction ) %>
                 <div class="pm-bid ">
                   <div id="J_PmMessage"> </div>
                     <dl class="pm-price J_PmPrice clearfix">
@@ -166,7 +167,8 @@ auction = @auction
                 </div>
                 <div class="my-info clearfix" id="J_User" style="display: block;">
                   <div class="my-info-hd bidder">
-                    <i class="iconfont-sf my-icon"></i>我的竞买号 <em class="J_NO">Z8235</em>
+                    <i class="iconfont-sf my-icon"></i>我的竞买号 <em class="J_NO">
+                      <%= auction_foregift.number %> </em>
                     <input type="hidden" value="false" class="J_IsPriorityUser">
                   </div>
                   <div class="my-info-detail bidder">
@@ -176,7 +178,7 @@ auction = @auction
                         </div>
                         <div class="line">
                             <span>已 出 价: </span>
-                            <strong class="J_MyBidCnt"> 0 </strong>
+                            <strong class="J_MyBidCnt"> <%= spree_current_user.auction_bid_count( auction ) %> </strong>
                             <em>次</em>
                         </div>
                   </div>
