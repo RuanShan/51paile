@@ -54,16 +54,18 @@ module Spree
     scope :within_today, -> { where(["(starts_at > ?) and (ends_at < ?)", Date.current.to_time.beginning_of_day, Date.current.to_time.end_of_day])}
     scope :closed, -> { where(["ends_at > ? ",Time.now])}
     scope :opened, -> { where(["(starts_at < ?) and (ends_at > ?)", Time.now, Time.now])}
-    scope :open, -> { where(["starts_at > ? ",Time.now]) }
+
     scope :active, ->{ where( active: true )}
 
-    after_initialize :correct_status
+    #after_initialize :correct_status
 
     before_update :won_offer_choosed, :if => :won_offer_id_changed?
     before_update :status_changed, :if => :down?
     before_validation :check_points, :on => :create, :if => :highlight
 
     after_create :deactive_others
+    after_commit :create_job_to_trigger_auction
+    after_commit :broadcast_to_channel
     #create form
     attr_accessor :expired_after
     #validates_inclusion_of :expired_after, :in => (1..MAX_EXPIRED_AFTER).to_a.collect{|d| d}, :on => :create
@@ -211,6 +213,25 @@ module Spree
       bids_count == 0 ?  starting_price : ( current_price + price_increment )
     end
 
+    #
+    def correct_status
+      if persisted?
+        #ends_at ||= DateTime.current
+        #starts_at ||= DateTime.current
+        if todo?
+          if starts_at <= DateTime.current
+             doing!
+          end
+        end
+        if doing?
+          if ends_at <= DateTime.current
+            done!
+          end
+        end
+      end
+    end
+
+
     private
 
     def down?
@@ -257,21 +278,30 @@ module Spree
       end
     end
 
-    #
-    def correct_status
-      if persisted?
-        #ends_at ||= DateTime.current
-        #starts_at ||= DateTime.current
-        if todo?
-          if ends_at < DateTime.current
-             done!
-          elsif starts_at < DateTime.current
-             doing!
-          end
-        elsif doing?
-          if ends_at < DateTime.current
-            done!
-          end
+    # add auction job handle auction status
+    def create_job_to_trigger_auction
+      Rails.logger.debug " ends_at_previous_change:#{ends_at_previous_change}, starts_at_previous_change:#{starts_at_previous_change}"
+      if starts_at_previously_changed? && starts_at.future?
+        AuctionsJob.set(wait_until: self.starts_at).perform_later(self)
+      end
+      if ends_at_previously_changed? && ends_at.future?
+        AuctionsJob.set(wait_until: self.ends_at).perform_later(self)
+      end
+    end
+
+    def broadcast_to_channel
+      if status_previously_changed?
+        if doing?
+          AuctionsChannel.broadcast_to(
+            @auction,
+            ChannelNotification::Auction.start( auction )
+          )
+        end
+        if done?
+          AuctionsChannel.broadcast_to(
+            @auction,
+            ChannelNotification::Auction.end( auction )
+          )
         end
       end
     end

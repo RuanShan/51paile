@@ -14,7 +14,7 @@ class AuctionsChannel < ApplicationCable::Channel
     @auction  = Spree::Auction.friendly.find( params[:room])
     AuctionsChannel.broadcast_to(
       @auction,
-      @auction.channel_attributes
+      ChannelNotification::Auction.bid( auction )      
     )
   end
 end

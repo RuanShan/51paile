@@ -21,29 +21,19 @@ jQuery(document).ready(function ($) {
           break;
         case "minutes":
           m = event.value;
-          $this.find(".pai-minute em").html( s );
           break;
         case "seconds":
-          s = event.value;
-          $this.find(".pai-second em").html( s );
-          if (parseInt(s)%2==0) //
-          {
-            if ( false )
-            {
-              //ajax_get('<%=close_auction_path(@auction)%>')
-              $this.detach();
-            }else{
-              //ajax_get('<%=start_auction_path(@auction)%>')
-            }
-          }
+          $this.find(".J_TimeLeft").replaceWith(
+             _.template( $("#j_datetime_left").html(), {variable: 'lasting'})(event.lasting));
           break;
         case "finished":
+          //location.reload();
           break;
       }
     });
   });
 
-  // product list count down
+  // product detail count down
   $("#sf-countdown").each( function(){
     var $this = $(this);
     var local_now = new Date( );
@@ -62,13 +52,11 @@ jQuery(document).ready(function ($) {
         case "minutes":
           break;
         case "seconds":
-
           $this.find(".J_TimeLeft").replaceWith(
              _.template( $("#j_datetime_left").html(), {variable: 'lasting'})(event.lasting));
           break;
         case "finished":
-          //ajax_get('<%=close_auction_path(@auction)%>')
-          //ajax_get('<%=start_auction_path(@auction)%>')
+          location.reload();
           break;
       }
     });

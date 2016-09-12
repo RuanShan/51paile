@@ -20,13 +20,20 @@ $ ->
         console.log "yes, it is unconnected"
       disconnected: ->
 
-      received: (data)->
-        console.log " yes, received data", data
-        @bidSuccess data
-      bid: (price) ->
-        @perform 'bid', price: price
+      received: (msg)->
+        console.log " yes, received msg", msg
+        switch msg.event
+          when 'bid' then  @newBid msg.data
+          when 'started' then @start msg.data
+          when 'end' then @end msg.data
 
-      bidSuccess: (data )->
+      start: (data) ->
+        @refresh
+      end: (data) ->
+        @refresh
+      newBid: (data )->
         $price.html( data.formatted_current_price )
         $priceInput.attr "value", data.formatted_biddable_price
         $bidPrice.attr "value", data.biddable_price
+      refresh: ->
+        location.reload()

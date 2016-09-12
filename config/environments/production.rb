@@ -92,4 +92,5 @@ Rails.application.configure do
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
 
+  config.active_job.queue_adapter = :sidekiq
 end
