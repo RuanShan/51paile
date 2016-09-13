@@ -1,5 +1,5 @@
 <ul>
-<% @taxonomies.each do |taxonomy| %>
+<% Spree::Taxonomy.all.each do |taxonomy| %>
   <li> <%= link_to(taxonomy.name, seo_url(taxonomy.root), class: "") %>
   <% cache [I18n.locale, taxonomy] do %>
       <%= taxons_tree_by_ulli(taxonomy.root, @taxon, 2) %>

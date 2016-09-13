@@ -1,6 +1,6 @@
 <h1 class="taxon-title"><%= @taxon.name %></h1>
 
-<div data-hook="taxon_products">
+<div class="sf-item-list" data-hook="taxon_products">
   <%= render partial: 'spree/shared/products', locals: { products: @products, taxon: @taxon } %>
 </div>
 
