@@ -57,7 +57,7 @@ module Spree
 
     scope :active, ->{ where( active: true )}
 
-    #after_initialize :correct_status
+    after_initialize :correct_status_for_exception
 
     before_update :won_offer_choosed, :if => :won_offer_id_changed?
     before_update :status_changed, :if => :down?
@@ -214,7 +214,7 @@ module Spree
     end
 
     #
-    def correct_status
+    def correct_status_for_exception
       if persisted?
         #ends_at ||= DateTime.current
         #starts_at ||= DateTime.current
@@ -293,14 +293,14 @@ module Spree
       if status_previously_changed?
         if doing?
           AuctionsChannel.broadcast_to(
-            @auction,
-            ChannelNotification::Auction.start( auction )
+            self,
+            ChannelNotifications::Auction.start( self )
           )
         end
         if done?
           AuctionsChannel.broadcast_to(
-            @auction,
-            ChannelNotification::Auction.end( auction )
+            self,
+            ChannelNotifications::Auction.end( self )
           )
         end
       end

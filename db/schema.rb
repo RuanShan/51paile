@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160909062401) do
+ActiveRecord::Schema.define(version: 20160912095634) do
 
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_file_name",               null: false
@@ -114,32 +114,31 @@ ActiveRecord::Schema.define(version: 20160909062401) do
   end
 
   create_table "spree_auctions", force: :cascade do |t|
-    t.boolean  "private",                      default: false,  null: false
+    t.boolean  "private",                      default: false, null: false
     t.boolean  "active",                       default: true
-    t.integer  "status",                       default: 0,      null: false
-    t.integer  "variant_id",                   default: 0,      null: false
-    t.integer  "owner_id",                     default: 0,      null: false
+    t.integer  "status",                       default: 0,     null: false
+    t.integer  "variant_id",                   default: 0,     null: false
+    t.integer  "owner_id",                     default: 0,     null: false
     t.integer  "won_offer_id"
-    t.string   "title",                        default: "",     null: false
-    t.text     "description",                  default: "",     null: false
+    t.string   "title",                        default: "",    null: false
+    t.text     "description",                  default: "",    null: false
     t.boolean  "highlight",                    default: false
     t.datetime "starts_at"
     t.datetime "ends_at"
     t.datetime "display_starts_at"
     t.datetime "display_ends_at"
-    t.float    "evaluated_price",              default: 0.0
-    t.float    "starting_price",               default: 0.0
-    t.float    "price_increment",              default: 0.0
-    t.float    "reserve_price",                default: 0.0
-    t.float    "deposit",                      default: 5000.0
+    t.integer  "evaluated_price",              default: 0
+    t.integer  "starting_price",               default: 0
+    t.integer  "price_increment",              default: 0
+    t.integer  "reserve_price",                default: 0
+    t.integer  "deposit",                      default: 5000
     t.integer  "offers_count",                 default: 0
-    t.integer  "visits",                       default: 0,      null: false
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
+    t.integer  "visits",                       default: 0,     null: false
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
     t.string   "number",            limit: 15
     t.integer  "product_id"
     t.integer  "bids_count"
-    t.index ["number"], name: "index_spree_auctions_on_number"
   end
 
   create_table "spree_bids", force: :cascade do |t|
@@ -171,8 +170,9 @@ ActiveRecord::Schema.define(version: 20160909062401) do
     t.string   "iso3"
     t.string   "name"
     t.integer  "numcode"
-    t.boolean  "states_required", default: false
+    t.boolean  "states_required",  default: false
     t.datetime "updated_at"
+    t.boolean  "zipcode_required", default: true
   end
 
   create_table "spree_credit_cards", force: :cascade do |t|
@@ -267,6 +267,7 @@ ActiveRecord::Schema.define(version: 20160909062401) do
     t.integer "option_type_id"
     t.index ["option_type_id"], name: "index_spree_option_type_prototypes_on_option_type_id"
     t.index ["prototype_id", "option_type_id"], name: "index_option_types_prototypes_on_prototype_and_option_type"
+    t.index ["prototype_id"], name: "index_spree_option_type_prototypes_on_prototype_id"
   end
 
   create_table "spree_option_types", force: :cascade do |t|
@@ -282,6 +283,7 @@ ActiveRecord::Schema.define(version: 20160909062401) do
   create_table "spree_option_value_variants", force: :cascade do |t|
     t.integer "variant_id"
     t.integer "option_value_id"
+    t.index ["option_value_id", "variant_id"], name: "index_option_values_variants_on_option_value_and_variant"
     t.index ["option_value_id"], name: "index_spree_option_value_variants_on_option_value_id"
     t.index ["variant_id", "option_value_id"], name: "index_option_values_variants_on_variant_id_and_option_value_id"
   end
@@ -595,6 +597,7 @@ ActiveRecord::Schema.define(version: 20160909062401) do
     t.integer "prototype_id"
     t.integer "property_id"
     t.index ["prototype_id", "property_id"], name: "index_properties_prototypes_on_prototype_and_property"
+    t.index ["prototype_id"], name: "index_spree_property_prototypes_on_prototype_id"
   end
 
   create_table "spree_prototype_taxons", force: :cascade do |t|
@@ -944,6 +947,30 @@ ActiveRecord::Schema.define(version: 20160909062401) do
     t.index ["url"], name: "index_spree_stores_on_url"
   end
 
+  create_table "spree_taggings", force: :cascade do |t|
+    t.integer  "tag_id"
+    t.string   "taggable_type"
+    t.integer  "taggable_id"
+    t.string   "tagger_type"
+    t.integer  "tagger_id"
+    t.string   "context",       limit: 128
+    t.datetime "created_at"
+    t.index ["context"], name: "index_spree_taggings_on_context"
+    t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "spree_taggings_idx", unique: true
+    t.index ["tag_id"], name: "index_spree_taggings_on_tag_id"
+    t.index ["taggable_id", "taggable_type", "tagger_id", "context"], name: "spree_taggings_idy"
+    t.index ["taggable_id"], name: "index_spree_taggings_on_taggable_id"
+    t.index ["taggable_type"], name: "index_spree_taggings_on_taggable_type"
+    t.index ["tagger_id", "tagger_type"], name: "index_spree_taggings_on_tagger_id_and_tagger_type"
+    t.index ["tagger_id"], name: "index_spree_taggings_on_tagger_id"
+  end
+
+  create_table "spree_tags", force: :cascade do |t|
+    t.string  "name"
+    t.integer "taggings_count", default: 0
+    t.index ["name"], name: "index_spree_tags_on_name", unique: true
+  end
+
   create_table "spree_tax_categories", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
@@ -1055,21 +1082,20 @@ ActiveRecord::Schema.define(version: 20160909062401) do
   end
 
   create_table "spree_variants", force: :cascade do |t|
-    t.string   "sku",                                        default: "",    null: false
-    t.decimal  "weight",            precision: 8,  scale: 2, default: "0.0"
-    t.decimal  "height",            precision: 8,  scale: 2
-    t.decimal  "width",             precision: 8,  scale: 2
-    t.decimal  "depth",             precision: 8,  scale: 2
+    t.string   "sku",                                      default: "",    null: false
+    t.decimal  "weight",          precision: 8,  scale: 2, default: "0.0"
+    t.decimal  "height",          precision: 8,  scale: 2
+    t.decimal  "width",           precision: 8,  scale: 2
+    t.decimal  "depth",           precision: 8,  scale: 2
     t.datetime "deleted_at"
-    t.boolean  "is_master",                                  default: false
+    t.boolean  "is_master",                                default: false
     t.integer  "product_id"
-    t.decimal  "cost_price",        precision: 10, scale: 2
+    t.decimal  "cost_price",      precision: 10, scale: 2
     t.integer  "position"
     t.string   "cost_currency"
-    t.boolean  "track_inventory",                            default: true
+    t.boolean  "track_inventory",                          default: true
     t.integer  "tax_category_id"
     t.datetime "updated_at"
-    t.integer  "stock_items_count",                          default: 0,     null: false
     t.datetime "discontinue_on"
     t.index ["deleted_at"], name: "index_spree_variants_on_deleted_at"
     t.index ["discontinue_on"], name: "index_spree_variants_on_discontinue_on"

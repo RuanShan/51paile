@@ -9,8 +9,10 @@
           </li>
       </ul>
 
-      <ul class="idle-nav2">
-        <li > <a> 拍卖</a></li>
+      <ul class="idle-nav2 sf-menu">
+        <li > <a> 拍卖分类</a>
+          <%= render :partial => 'spree/shared/taxonomies_superfish' %>
+        </li>
       </ul>
       <ul class="idle-nav" data-hook>
         <li id="home-link" data-hook><%= link_to Spree.t(:home), spree.root_path %></li>

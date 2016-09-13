@@ -27,7 +27,7 @@ jQuery(document).ready(function ($) {
              _.template( $("#j_datetime_left").html(), {variable: 'lasting'})(event.lasting));
           break;
         case "finished":
-          //location.reload();
+          location.reload();
           break;
       }
     });

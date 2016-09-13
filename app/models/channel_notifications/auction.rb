@@ -1,6 +1,6 @@
-module ChannelNotification
+module ChannelNotifications
   class Auction < Base
-    EventEnum = struct.new( :bid, :started, :end )[:bid, :started, :end]
+    EventEnum = Struct.new( :bid, :started, :end )[:bid, :started, :end]
 
     def self.bid(auction)
       new( EventEnum.bid, auction ).message

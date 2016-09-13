@@ -1,13 +1,14 @@
 
 <div class="info-section">
                 <!-- price { -->
+    <% if auction.todo? %>
                 <p class="price price-todo pai-status-todo-show">
                     <span class="">
                         起拍价
                     </span>
                     <span class="value"><em class="currency">¥</em><em class=""> <%= auction.starting_price %> <s>元</s></em></span>
                 </p>
-
+    <% elsif auction.doing? %>
                 <p class="price price-current pai-status-doing-show
                                             pai-status-break-show
                                             pai-status-revocation-show
@@ -16,15 +17,13 @@
                     <span class="value"><em class="currency">¥</em><em class="pai-xmpp-current-price ">  <%= auction.starting_price %> <s>元</s></em></span>
                     <span class="bid-tips field-hide">（<em class="pai-xmpp-bid-count">0</em>次出价）</span>
                 </p>
-
+    <% elsif auction.done? %>
                 <p class="price price-done pai-status-done-show">
-
                     <span class="">当前价</span>
-
                     <span class="value"><em class="currency">¥</em><em class="pai-xmpp-current-price ">  <%= auction.starting_price %> <s>元</s></em></span>
                     <span class="bid-tips field-hide">（<em class="pai-xmpp-bid-count">0</em>次出价）</span>
                 </p>
-
+    <% end %>
                 <p class="price price-assess">
                     <span class="">评估价</span>
                     <span class="value"><em class="currency">¥</em><em> <%= auction.evaluated_price %> <s>元</s></em></span>
@@ -33,22 +32,32 @@
                 <!-- } price -->
 
                 <!-- time / countdown { -->
+    <% if auction.todo? %>
+            <% if auction.starts_at.today? %>
+              <p class="time time-todo pai-status-todo-show">
+                  <span class="">距开始</span>
+                  <%= content_tag "span", class: "value pai-countdown pai-xmpp-countdown", data:{ itemid: auction.id, timetoend: auction.timetoend, timetostart: auction.timetostart, end: auction.endat, start: auction.startat, now: auction.nowat } do %>
+                      <span class="J_TimeLeft"><var class="pai-hour"><em>00</em>时</var><var class="pai-minute"><em>00</em>分</var><var class="pai-second"><em>00</em>秒</var></span>
+                  <% end %>
+              </p>
+            <% else %>
                 <p class="time time-todo pai-status-todo-show">
                     <span class="">
                         开拍时间
                     </span>
-                    <span class="value"> <%=format_datetime auction.starts_at %> </span>
+                    <span class="value"> <%= auction.formatted_starts_at %> </span>
                 </p>
-
+            <% end %>
+    <% elsif auction.doing? %>
                 <p class="time time-doing pai-status-doing-show">
                     <span class="">距结束</span>
                     <%= content_tag "span", class: "value pai-countdown pai-xmpp-countdown", data:{ itemid: auction.id, timetoend: auction.timetoend, timetostart: auction.timetostart, end: auction.endat, start: auction.startat, now: auction.nowat } do %>
-                        <span class="J_TimeLeft"><var class="pai-hour"><em>21</em>时</var><var class="pai-minute"><em>00</em>分</var><var class="pai-second"><em>02</em>秒</var></span>
+                        <span class="J_TimeLeft"><var class="pai-hour"><em>00</em>时</var><var class="pai-minute"><em>00</em>分</var><var class="pai-second"><em>00</em>秒</var></span>
                     <% end %>
 
                     <span class="bid-tips field-hide">（<em class="pai-xmpp-delay-count">0</em>次延时）</span>
                 </p>
-
+    <% elsif auction.done? %>
                 <p class="time time-done pai-status-done-show
                                     pai-status-break-show
                                     pai-status-revocation-show
@@ -57,6 +66,7 @@
                     <span class="value"><%=format_datetime auction.ends_at %> </span>
                     <span class="bid-tips field-hide">（<em class="pai-xmpp-delay-count">0</em>次延时）</span>
                 </p>
+    <% end %>
                 <!-- } time / countdown -->
 </div>
 <div class="footer-section">

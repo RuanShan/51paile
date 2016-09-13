@@ -19,7 +19,7 @@
 <% if products.any? %>
   <ul id="products" class="sf-pai-item-list " data-hook>
     <% products.each do |product| %>
-      <% auction = product.master.active_auction %>
+      <% auction = product.active_auction %>
       <% url = spree.product_url(product, taxon_id: @taxon.try(:id)) %>
       <li id="product_<%= product.id %>" class="pai-item pai-status-<%=auction.try(:status) %>" data-hook="products_list_item" itemscope itemtype="https://schema.org/Product">
 
@@ -33,7 +33,7 @@
             <% if auction %>
                 <%= render partial: "spree/shared/auction_info", locals: { auction: auction } %>
             <% end %>
-            
+
           <% end %>
         <% end %>
       </li>

@@ -1,4 +1,4 @@
-module ChannelNotification
+module ChannelNotifications
    class Base
      attr_accessor :event, :model
 
@@ -7,6 +7,6 @@ module ChannelNotification
 
      def data
      end
-     
+
    end
  end

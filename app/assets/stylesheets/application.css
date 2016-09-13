@@ -102,6 +102,8 @@
     bottom: 0px;
     position: absolute;
     font-size: 15px;
+    margin-bottom: 0 !important;
+    background-color: #2A1E1C;
  }
  .idle-nav li {
     display: inline;
@@ -110,12 +112,17 @@
     margin: 0 15px;
     font-size: 15px;
 }
+.idle-nav2 > li{
+  width: 100%;
+}
+.idle-nav2 > li:hover{
+  background-color: #2A1E1C !important;
+}
 .idle-nav2 li{
-  display: block;
   background-color: #2A1E1C;
+  display: block;
   margin: 0;
   text-align: center;
-  line-height: 35px;
 }
 .idle-nav2 li a{
   color: #ffffff;
@@ -127,7 +134,7 @@
     color: #000;
     text-decoration: none;
 }
- .idle-search {
+.idle-search {
     position: absolute;
     right: 65px;
     top: 27px;
