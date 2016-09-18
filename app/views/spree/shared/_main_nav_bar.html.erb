@@ -20,7 +20,6 @@
         <li ><%= link_to "降降降", spree.by_type_auctions_path %></li>
         <li ><%= link_to "发布闲置", spree.new_auction_path %></li>
         <li ><%= link_to "我的闲置", spree.new_auction_path %></li>
-        <%= render partial: 'spree/static_content/static_content_list', collection: Spree::Page.by_store(current_store).visible.header_links, as: :page %>
       </ul>
 
     </div>

@@ -14,7 +14,6 @@
  *= require frontend/bootstrap
  *= require frontend/superfish
  *= require frontend/superfish-vertical
- *= require spree/frontend/spree_static_content
  *= require frontend/auction
  *= require frontend/images
  *= require frontend/tip

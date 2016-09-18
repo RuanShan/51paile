@@ -48,7 +48,8 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-datetimepicker'
 end
 
-gem 'spree_static_content', path: './spree_static_content'
+#gem 'spree_static_content', path: './spree_static_content'
+gem 'high_voltage'
 
 #gem 'spree_auctions', path: './spree_auctions'
 
