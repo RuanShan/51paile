@@ -1,9 +1,11 @@
 module Spree
   class Auction < ActiveRecord::Base
+
     include Spree::AuctionTime
     include Spree::AuctionMoney
     include Spree::ChannelAuction
 
+    acts_as_paranoid
     #attr_protected :status, :hightlight
     AuctionTypeEnum = Struct.new( :salesroom, :internet) ['1', '2']
     FeedbackEnum = Struct.new( :yes, :no) ['1', '2']

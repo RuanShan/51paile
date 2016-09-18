@@ -1,6 +1,18 @@
 http://wulfric.me/2016/09/active-job-action-cable-in-rails/
 
+线上竞价系统设计
 http://www.cnblogs.com/wizardguy/p/how-to-design-a-auction-system.html
 
-
 http://liamkaufman.com/blog/2013/02/27/adding-real-time-to-a-restful-rails-app/
+
+网上拍卖系统分析设计说明书
+http://wenku.baidu.com/view/64e8f4db50e2524de5187ef2.html
+
+毕业论文网上拍卖系统
+http://wenku.baidu.com/view/278dad2a2af90242a895e58e.html
+
+名词解释&竞拍流程&常见问题
+https://www.taobao.com/markets/paimai/sf-helpcenter?path=sf-helpcenter-sy
+
+让IE6 IE7 IE8 IE9 IE10 IE11支持Bootstrap的解决方法
+http://blog.csdn.net/chenhongwu666/article/details/41513901

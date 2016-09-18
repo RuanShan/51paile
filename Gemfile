@@ -36,6 +36,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'state_machines-activerecord', '~> 0.2'
 
+gem "paranoia", "~> 2.2.0.pre"
+
 gem 'spree',  github: "spree/spree", branch: "master"
 # custom user login menu
 gem 'spree_auth_devise',  github: "spree/spree_auth_devise", branch: "master"

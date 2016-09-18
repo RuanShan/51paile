@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160912095634) do
+ActiveRecord::Schema.define(version: 20160918080508) do
 
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_file_name",               null: false
@@ -139,6 +139,9 @@ ActiveRecord::Schema.define(version: 20160912095634) do
     t.string   "number",            limit: 15
     t.integer  "product_id"
     t.integer  "bids_count"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_spree_auctions_on_deleted_at"
+    t.index ["status", "starts_at"], name: "index_spree_auctions_on_status_and_starts_at"
   end
 
   create_table "spree_bids", force: :cascade do |t|

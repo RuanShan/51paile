@@ -4,6 +4,7 @@ module Spree
     before_action :load_object, only: [:apply,:bid]
 
     def index
+      
     end
 
 
