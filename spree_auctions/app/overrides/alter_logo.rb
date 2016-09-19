@@ -1,1 +1,0 @@
-Deface::Override.new(:virtual_path  => "spree/shared/_header",:replace => "figure#logo", :text  => '<figure id="logo" class="columns six" data-hook><a href="/"><img src="/assets/images.jpg"></a></figure>', :name => "alter_logo")

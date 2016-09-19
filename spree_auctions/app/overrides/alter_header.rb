@@ -1,1 +1,0 @@
-Deface::Override.new(:virtual_path  => "spree/admin/orders/index",:insert_before => "[data-hook='admin_orders']", :text  => "<td class='align-center'><%= order.display_total_bid_price %></td>", :name => "alter_header")
