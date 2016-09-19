@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160918080508) do
+ActiveRecord::Schema.define(version: 20160918100323) do
 
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_file_name",               null: false
@@ -495,6 +495,7 @@ ActiveRecord::Schema.define(version: 20160918080508) do
     t.boolean  "promotionable",        default: true
     t.string   "meta_title"
     t.datetime "discontinue_on"
+    t.string   "type"
     t.index ["available_on"], name: "index_spree_products_on_available_on"
     t.index ["deleted_at"], name: "index_spree_products_on_deleted_at"
     t.index ["discontinue_on"], name: "index_spree_products_on_discontinue_on"
@@ -1100,6 +1101,15 @@ ActiveRecord::Schema.define(version: 20160918080508) do
     t.integer  "tax_category_id"
     t.datetime "updated_at"
     t.datetime "discontinue_on"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.integer  "evaluated_price",                          default: 0
+    t.integer  "starting_price",                           default: 0
+    t.integer  "price_increment",                          default: 0
+    t.integer  "reserve_price",                            default: 0
+    t.integer  "deposit",                                  default: 0
+    t.integer  "offers_count",                             default: 0
+    t.integer  "status",                                   default: 0
     t.index ["deleted_at"], name: "index_spree_variants_on_deleted_at"
     t.index ["discontinue_on"], name: "index_spree_variants_on_discontinue_on"
     t.index ["is_master"], name: "index_spree_variants_on_is_master"
